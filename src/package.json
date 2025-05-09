@@ -2,8 +2,8 @@
   "scripts": {
     "watch": "npm run watch:sass",
     "build": "npm run build:sass",
-    "watch:sass": "sass --no-source-map sass/:../dist/css/ --watch",
-    "build:sass": "sass --no-source-map sass/:../dist/css/ --style compressed"
+    "watch:sass": "sass --no-source-map sass/:../docs/css/ --watch",
+    "build:sass": "sass --no-source-map sass/:../docs/css/ --style compressed"
   },
   "dependencies": {
     "gulp": "^5.0.0",
