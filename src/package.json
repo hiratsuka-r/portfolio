@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "watch": "npm run watch:sass",
+    "build": "npm run build:sass",
+    "watch:sass": "sass --no-source-map sass/:../dist/css/ --watch",
+    "build:sass": "sass --no-source-map sass/:../dist/css/ --style compressed"
+  },
+  "dependencies": {
+    "gulp": "^5.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^6.0.1",
+    "gulp-uglify": "^3.0.2",
+    "normalize.css": "^8.0.1",
+    "sass": "^1.87.0"
+  }
+}
