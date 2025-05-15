@@ -1,6 +1,6 @@
 (() => {
-  const btnToTop = document.querySelector(".js-toTop");
-  const isClass = "is-see"; // 通過後に付与されるクラス
+  const btnToTop = document.querySelector(".js_move-top");
+  const isClass = "js_is-animated"; // 通過後に付与されるクラス
 
   /**
    * 各項目タイトルにビューポート侵入時クラスを付与する
@@ -9,7 +9,7 @@
    * @returns {void}
    */
   const titleObserve = () => {
-    const mvClass = "js-mvHeading";
+    const mvClass = "js_move-heading";
 
     /**
      * IntersectionObserver のコールバック関数
@@ -37,7 +37,7 @@
    * @returns {void}
    */
   const toTopObserve = () => {
-    const targetObj = document.querySelector(".section__profile-name");
+    const targetObj = document.querySelector(".section--profile-name");
 
     /**
      * IntersectionObserver のコールバック関数
