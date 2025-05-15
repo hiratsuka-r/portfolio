@@ -17,7 +17,7 @@ gulp.task("sass", () => {
 });
 
 //js -> js(minify) -> output:docs
-gulp.task("js-minify", () => {
+gulp.task("js_minify", () => {
   return gulp
     .src("js/**/*.js")
     .pipe(uglify())
@@ -25,4 +25,4 @@ gulp.task("js-minify", () => {
     .pipe(gulp.dest("../docs/js"));
 });
 
-gulp.task("build", gulp.series("sass", "js-minify"));
+gulp.task("build", gulp.series("sass", "js_minify"));

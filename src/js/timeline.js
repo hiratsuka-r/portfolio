@@ -3,12 +3,12 @@
   const breakPoint = 599; //表示切り替えの画面幅（px）
 
   const disabledClass = "disabled";
-  const prevClass = "js-arrow__prev";
-  const nextClass = "js-arrow__next";
+  const prevClass = "js_arrow-prev";
+  const nextClass = "js_arrow-next";
 
-  const timeline = document.querySelector(".js-timelines");
+  const timeline = document.querySelector(".js_timelines");
 
-  const arrows = document.querySelectorAll(".js-arrow");
+  const arrows = document.querySelectorAll(".js_arrow");
   const arrowPrev = document.querySelector(`.${prevClass}`);
   const arrowNext = document.querySelector(`.${nextClass}`);
 
@@ -28,8 +28,8 @@
    */
   const initSetArrowHandlers = () => {
     //タイムラインの最初と最後のカードを取得
-    const firstItem = document.querySelector(".js-timeline:first-child");
-    const lastItem = document.querySelector(".js-timeline:last-child");
+    const firstItem = document.querySelector(".js_timeline:first-child");
+    const lastItem = document.querySelector(".js_timeline:last-child");
 
     arrows.forEach((arrow) => {
       arrow.addEventListener("click", () => {
@@ -70,7 +70,7 @@
    */
   const _isElementInViewArea = (el, position) => {
     const elRect = el.getBoundingClientRect();
-    const wrapRect = document.querySelector(".js-timeline-wrap").getBoundingClientRect();
+    const wrapRect = document.querySelector(".js_timeline-wrap").getBoundingClientRect();
     if (position === "first") {
       return elRect.top >= 0 && wrapRect.left <= elRect.left;
     } else {
@@ -107,7 +107,7 @@
    * @returns {number} - 最大の高さ
    */
   const _setEqualHeight = () => {
-    const cards = document.querySelectorAll(".js-timeline__card");
+    const cards = document.querySelectorAll(".js_timeline__card");
     let maxHeight = 0;
     cards.forEach((card) => {
       const height = card.offsetHeight;

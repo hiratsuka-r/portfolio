@@ -1,4 +1,8 @@
 {
+  "name": "hiratsuka-r_portforio",
+  "version": "0.2.0",
+  "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "watch": "npm run watch:sass",
     "build": "npm run build:sass",

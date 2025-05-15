@@ -13,6 +13,7 @@ $media-pc: 960px;
 $media-tablet: 768px;
 $media-tablet__timeline: 599px;
 $media-sp: 428px;
+$media-sp__small: 375px;
 
 *,
 *:before,
@@ -65,12 +66,14 @@ h4 {
 
 .article {
   padding: 40px 0;
+  overflow: hidden;
 }
 
 .section {
   position: relative;
   width: 86vw;
-  max-width: 960px;
+  min-width: calc($media-sp__small * 0.86);
+  max-width: $media-pc;
   margin: 0 auto;
 }
 
@@ -94,7 +97,7 @@ h4 {
   }
 }
 
-.margin__bottom {
+.u-mb {
   margin-bottom: 16px;
 }
 
@@ -110,28 +113,28 @@ h4 {
   }
 }
 
-/* move */
-.mv-top {
+/* animated */
+.is-animated-top {
   opacity: 0;
   transform: translateY(3rem);
   transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
 
-  &.is-mv {
+  &.js_is-animated {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.mv-slash {
+.is-animated-slash {
   transition: transform 0.5s cubic-bezier(0.5, 2, 0.8, 0.7) 0.25s, opacity 0.5s ease-out 0.25s;
-  transform: translateY(800px) rotate(-45deg) scale(1.25);
+  transform: translateY(25vh) rotate(-45deg) scale(1.25);
 
-  &.is-mv {
+  &.js_is-animated {
     transform: translateY(0) rotate(0deg) scale(1);
   }
 }
 
-.mv-hover {
+.is-animated-hover {
   transition: all 0.2s ease-in-out;
   &:hover {
     cursor: pointer;
@@ -139,7 +142,7 @@ h4 {
   }
 }
 
-.mv-fluffy {
+.is-animated-fluffy {
   animation: fluffy 6s ease-in-out infinite alternate;
   transition: 3ms ease-in-out;
 
@@ -158,21 +161,21 @@ h4 {
 
 /* プロフィール */
 
-.article__profile {
+.article--profile {
   background: $color-profile;
 }
 
-.section__profile-name,
-.section__profile-note,
-.section__profile-timeline {
+.section--profile-name,
+.section--profile-note,
+.section--profile-timeline {
   background: $color-white;
   border-radius: 20px;
   padding: 32px;
 }
 
-.heading__profile-name,
-.heading__profile-note,
-.heading__profile-timeline {
+.heading--profile-name,
+.heading--profile-note,
+.heading--profile-timeline {
   font-size: 1.2rem;
   margin: 0;
   padding-bottom: 32px;
@@ -180,12 +183,12 @@ h4 {
 
 /* プロフィール > 名前 */
 
-.section__profile-name {
+.section--profile-name {
   display: flex;
   align-items: center;
 }
 
-.heading__profile-name {
+.heading--profile-name {
   display: none;
 }
 
@@ -236,7 +239,7 @@ h4 {
 }
 
 @media screen and (max-width: $media-tablet) {
-  .section__profile-name {
+  .section--profile-name {
     flex-direction: column;
   }
   .profile-name__content {
@@ -246,7 +249,7 @@ h4 {
 }
 
 @media screen and (max-width: $media-sp) {
-  .heading__profile-name {
+  .heading--profile-name {
     display: block;
     padding-bottom: 16px;
   }
@@ -264,7 +267,7 @@ h4 {
 
 /* プロフィール > タイムライン */
 
-.section__profile-timeline {
+.section--profile-timeline {
   overflow-x: hidden;
   white-space: nowrap;
 }
@@ -400,7 +403,7 @@ h4 {
 .timeline-arrows {
   display: flex;
   justify-content: center;
-  padding-top: 16px;
+  padding-top: 24px;
 
   img {
     height: 45px;
@@ -417,12 +420,12 @@ h4 {
 }
 
 @media screen and (max-width: $media-tablet__timeline) {
-  .heading__timeline__timeline {
+  .heading--timeline__timeline {
     margin: 0 0 32px;
     padding: 0;
   }
 
-  .section__timeline__timeline {
+  .section--timeline__timeline {
     padding-bottom: 0;
   }
 
@@ -560,11 +563,12 @@ h4 {
 
 /* 制作物 */
 
-.article__work {
+.article--work {
   background: $color-work;
+  padding-bottom: 72px;
 }
 
-.section__work {
+.section--work {
   color: $color-black;
   text-align: center;
 }
@@ -631,5 +635,39 @@ h4 {
 @media screen and (max-width: $media-tablet) {
   .work {
     width: 48%;
+  }
+}
+
+@media screen and (max-width: $media-sp) {
+  .work {
+    width: auto;
+  }
+}
+
+/* ナビゲーション > ページトップに戻る */
+
+.nav-toTop {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+  opacity: 0;
+  transition: all 0.5s;
+
+  &.js_is-animated {
+    opacity: 1;
+  }
+}
+
+.nav-toTop__btn {
+  .fa-lg {
+    font-size: 3em;
+    line-height: 0;
+    vertical-align: 0;
+  }
+
+  .btn-text {
+    display: block;
+    transform: rotate(10deg);
+    padding-right: 16px;
   }
 }
