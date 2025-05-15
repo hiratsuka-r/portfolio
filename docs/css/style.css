@@ -51,11 +51,13 @@ h4 {
 
 .article {
   padding: 40px 0;
+  overflow: hidden;
 }
 
 .section {
   position: relative;
   width: 86vw;
+  min-width: 322.5px;
   max-width: 960px;
   margin: 0 auto;
 }
@@ -98,16 +100,16 @@ h4 {
   transform: translateY(3rem);
   transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
 }
-.mv-top.is-mv {
+.mv-top.is-see {
   opacity: 1;
   transform: translateY(0);
 }
 
 .mv-slash {
   transition: transform 0.5s cubic-bezier(0.5, 2, 0.8, 0.7) 0.25s, opacity 0.5s ease-out 0.25s;
-  transform: translateY(800px) rotate(-45deg) scale(1.25);
+  transform: translateY(25vh) rotate(-45deg) scale(1.25);
 }
-.mv-slash.is-mv {
+.mv-slash.is-see {
   transform: translateY(0) rotate(0deg) scale(1);
 }
 
@@ -521,6 +523,7 @@ h4 {
 /* 制作物 */
 .article__work {
   background: #1b95e0;
+  padding-bottom: 72px;
 }
 
 .section__work {
@@ -591,4 +594,26 @@ h4 {
   .work {
     width: 48%;
   }
+}
+/* ナビゲーション > ページトップに戻る */
+.nav-toTop {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.nav-toTop.is-see {
+  opacity: 1;
+}
+
+.nav-toTop__btn .fa-lg {
+  font-size: 3em;
+  line-height: 0;
+  vertical-align: 0;
+}
+.nav-toTop__btn .btn-text {
+  display: block;
+  transform: rotate(10deg);
+  padding-right: 16px;
 }

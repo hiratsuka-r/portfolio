@@ -13,6 +13,7 @@ $media-pc: 960px;
 $media-tablet: 768px;
 $media-tablet__timeline: 599px;
 $media-sp: 428px;
+$media-sp__small: 375px;
 
 *,
 *:before,
@@ -65,12 +66,14 @@ h4 {
 
 .article {
   padding: 40px 0;
+  overflow: hidden;
 }
 
 .section {
   position: relative;
   width: 86vw;
-  max-width: 960px;
+  min-width: calc($media-sp__small * 0.86);
+  max-width: $media-pc;
   margin: 0 auto;
 }
 
@@ -116,7 +119,7 @@ h4 {
   transform: translateY(3rem);
   transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
 
-  &.is-mv {
+  &.is-see {
     opacity: 1;
     transform: translateY(0);
   }
@@ -124,9 +127,9 @@ h4 {
 
 .mv-slash {
   transition: transform 0.5s cubic-bezier(0.5, 2, 0.8, 0.7) 0.25s, opacity 0.5s ease-out 0.25s;
-  transform: translateY(800px) rotate(-45deg) scale(1.25);
+  transform: translateY(25vh) rotate(-45deg) scale(1.25);
 
-  &.is-mv {
+  &.is-see {
     transform: translateY(0) rotate(0deg) scale(1);
   }
 }
@@ -562,6 +565,7 @@ h4 {
 
 .article__work {
   background: $color-work;
+  padding-bottom: 72px;
 }
 
 .section__work {
@@ -631,5 +635,33 @@ h4 {
 @media screen and (max-width: $media-tablet) {
   .work {
     width: 48%;
+  }
+}
+
+/* ナビゲーション > ページトップに戻る */
+
+.nav-toTop {
+  position: fixed;
+  right: 8px;
+  bottom: 8px;
+  opacity: 0;
+  transition: all 0.5s;
+
+  &.is-see {
+    opacity: 1;
+  }
+}
+
+.nav-toTop__btn {
+  .fa-lg {
+    font-size: 3em;
+    line-height: 0;
+    vertical-align: 0;
+  }
+
+  .btn-text {
+    display: block;
+    transform: rotate(10deg);
+    padding-right: 16px;
   }
 }

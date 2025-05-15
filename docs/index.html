@@ -10,16 +10,16 @@
     <link rel="apple-touch-icon" href="webclip.png" />
 
     <meta property="og:site_name" content="hiratsuka-r | ポートフォリオ" />
-    <meta property="og:url" content="URL" />
+    <meta property="og:url" content="https://hiratsuka-r.github.io/portfolio/" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="hiratsuka-r | ポートフォリオ" />
     <meta property="og:description" content="hiratsuka-rのポートフォリオ" />
-    <meta property="og:image" content="URL" />
+    <meta property="og:image" content="https://hiratsuka-r.github.io/portfolio/" />
     <meta property="og:locale" content="ja_JP" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:description" content="hiratsuka-rのポートフォリオ" />
-    <meta name="twitter:image:src" content="URL" />
+    <meta name="twitter:image:src" content="https://hiratsuka-r.github.io/portfolio/" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,8 +27,6 @@
 
     <link rel="stylesheet" href="css/normalize.min.css" />
     <link rel="stylesheet" href="css/style.min.css" />
-    <script src="js/timeline.min.js" defer></script>
-    <script src="js/script.min.js" defer></script>
 
     <!-- 公開設定にnoindexを入れておく -->
     <meta name="robots" content="noindex,nofollow" />
@@ -36,7 +34,7 @@
 
   <body>
     <article class="article article__profile">
-      <h1 class="heading js-mv mv-top">プロフィール</h1>
+      <h1 class="heading js-mvHeading mv-top">プロフィール</h1>
 
       <div class="wrapper">
         <section class="section section__profile-name">
@@ -55,7 +53,7 @@
               <span>-</span>
               <span>r</span>
             </div>
-            <img class="profile-name__image" src="https://github.com/hiratsuka-r.png" alt="" />
+            <img class="profile-name__image" src="img/22903625.jpg" alt="" />
           </div>
           <div class="profile-name__content">
             <p class="margin__bottom">
@@ -70,7 +68,7 @@
 
       <div class="wrapper">
         <section class="section section__profile-timeline js-timeline-wrap">
-          <h2 class="heading__profile-timeline js-mv mv-top">現在までのあゆみ</h2>
+          <h2 class="heading__profile-timeline js-mvHeading mv-top">現在までのあゆみ</h2>
           <ol class="timelines js-timelines">
             <li class="timeline js-timeline">
               <div class="timeline__card js-timeline__card">
@@ -139,7 +137,7 @@
       </div>
       <div class="wrapper">
         <section class="section section__profile-note">
-          <h2 class="heading__profile-note js-mv mv-top">開発スキル・環境</h2>
+          <h2 class="heading__profile-note js-mvHeading mv-top">開発スキル・環境</h2>
           <dl class="profile-skill">
             <dt class="profile-skill__dt">言語</dt>
             <dd class="profile-skill__dd">HTML</dd>
@@ -187,7 +185,7 @@
       </div>
       <div class="wrapper">
         <section class="section section__profile-note">
-          <h2 class="heading__profile-note js-mv mv-top">対応可能な業務</h2>
+          <h2 class="heading__profile-note js-mvHeading mv-top">対応可能な業務</h2>
           <ul class="profile-menu">
             <li>ECサイト保守開発</li>
             <li>ホームページ・LP(1Pで完結できるサイト)構築</li>
@@ -199,7 +197,7 @@
       </div>
       <div class="wrapper">
         <section class="section section__profile-note">
-          <h2 class="heading__profile-note js-mv mv-top">対応可能な時間帯</h2>
+          <h2 class="heading__profile-note js-mvHeading mv-top">対応可能な時間帯</h2>
           <p>
             [平日] 9:30〜17:00 22:30〜翌1:00 <br />
             (※メッセージの返信は時間外でも即レスを心がけております)
@@ -209,7 +207,7 @@
     </article>
 
     <article class="article article__work">
-      <h2 class="heading js-mv mv-slash">制作物</h2>
+      <h2 class="heading js-mvHeading mv-slash">制作物</h2>
       <div class="wrapper">
         <section class="section section__work">
           <p class="work-info">
@@ -310,5 +308,16 @@
         </section>
       </div>
     </article>
+
+    <nav class="nav-toTop js-toTop">
+      <button class="nav-toTop__btn">
+        <i class="fa-solid fa-shoe-prints fa-rotate-270 fa-lg"></i>
+        <span class="btn-text">TOP</span>
+      </button>
+    </nav>
   </body>
+
+  <script src="https://kit.fontawesome.com/85d6855f03.js" crossorigin="anonymous"></script>
+  <script src="js/timeline.min.js" defer></script>
+  <script src="js/script.min.js" defer></script>
 </html>
