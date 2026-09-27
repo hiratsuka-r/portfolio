@@ -2,6 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import XLSX from 'xlsx';
 
+// import解決されるESM版(xlsx.mjs)はNodeのfsを自動検出しないため、
+// 明示的に渡さないとXLSX.readFileが「Cannot access file」で失敗する。
+XLSX.set_fs(fs);
+
 /**
  * Excelの1シート1カード形式から、data/works.tsを生成する。
  *
