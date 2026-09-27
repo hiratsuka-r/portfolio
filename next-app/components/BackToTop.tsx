@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { smoothScrollTo } from '../utils/scroll';
+import { smoothScrollTo } from '@/utils/scroll';
 
 const SHOW_AFTER_SCROLL_Y = 200;
 

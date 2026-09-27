@@ -1,5 +1,5 @@
+import '@/app/style.scss';
 import type { Metadata } from 'next';
-import './style.scss';
 
 export const metadata: Metadata = {
     title: 'かえるラボ｜Web開発・UI/UXデザイン',
