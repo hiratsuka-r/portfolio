@@ -9,7 +9,7 @@ export const metadata: Metadata = {
         canonical: '/portfolio/',
     },
     icons: {
-        icon: '/portfolio/img/logo_green.png',
+        icon: '/portfolio/img/favicon.png',
     },
     robots: { index: false, follow: false },
 };
