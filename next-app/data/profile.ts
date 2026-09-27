@@ -90,22 +90,16 @@ export const timeline: TimelineEntry[] = [
 ];
 
 export const skillGroups = [
-    ['言語', ['HTML', 'CSS (Scss,Sass)', 'JavaScript', 'TypeScript', 'PHP', 'Java', 'SQL']],
     [
-        'フレームワーク',
-        ['CakePHP', 'Laravel', 'React', 'Angular', 'Riot.js', 'WordPress', 'HeadlessCMS'],
+        '言語・マークアップ',
+        ['HTML', 'CSS / SCSS', 'JavaScript', 'TypeScript', 'PHP', 'Java', 'SQL'],
     ],
     [
-        '開発系ツール',
-        [
-            'npm',
-            'node.js',
-            'VSCode',
-            'Test (PHPUnit,JUnit)',
-            'TaskRunner (Gulp,webpack,rollup)',
-            'AWS (S3,CloudFront,RDS,DynamoDB等)',
-        ],
+        'フレームワーク・ライブラリ',
+        ['Next.js', 'React', 'React Native', 'Angular', 'CakePHP', 'Laravel', 'Riot.js'],
     ],
-    ['業務改善系ツール', ['GA', 'Page Speed Insights', 'Lighthouse', 'DBMS_XPLAN.DISPLAY_CURSOR']],
-    ['デザイン系ツール', ['Adobe (Ps,Ai,Xd,Dw)', 'Figma', 'Sketch']],
+    ['開発環境・ツール', ['Node.js', 'npm', 'Git', 'GitHub', 'Docker', 'PHPUnit', 'JUnit']],
+    ['AI支援', ['GitHub Copilot']],
+    ['クラウド・インフラ', ['AWS', 'S3', 'CloudFront', 'RDS', 'DynamoDB', 'Lambda']],
+    ['デザイン・制作', ['Figma', 'Sketch', 'Photoshop', 'Illustrator']],
 ] as const;
