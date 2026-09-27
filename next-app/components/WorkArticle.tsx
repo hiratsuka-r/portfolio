@@ -9,7 +9,7 @@ import { WorksSection } from './WorksSection';
 export function WorkArticle() {
     // 制作実績の説明と一覧表示をまとめたページセクションを描画する。
     return (
-        <article className="article article--work">
+        <article className="article article--work" id="works">
             <AnimatedHeading className="heading js_move-heading is-animated-slash">
                 制作実績
             </AnimatedHeading>

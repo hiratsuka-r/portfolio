@@ -10,7 +10,7 @@ import { profileName, skillGroups } from '../data/profile';
 export function ProfileArticle() {
     // プロフィール、経歴、スキル、対応業務を各セクションとして表示する。
     return (
-        <article className="article article--profile">
+        <article className="article article--profile" id="profile">
             <AnimatedHeading className="heading js_move-heading is-animated-top" level={1}>
                 プロフィール
             </AnimatedHeading>
@@ -55,7 +55,7 @@ export function ProfileArticle() {
             <ProfileTimeline />
 
             <div className="wrapper">
-                <section className="section section--profile-note">
+                <section className="section section--profile-note" id="skills">
                     <AnimatedHeading className="heading--profile-note js_move-heading is-animated-top">
                         開発スキル・環境
                     </AnimatedHeading>
@@ -94,7 +94,7 @@ export function ProfileArticle() {
                     <AnimatedHeading className="heading--profile-note js_move-heading is-animated-top">
                         対応可能な時間帯
                     </AnimatedHeading>
-                    <p>[平日] 9:30〜17:00 22:00〜24:00</p>
+                    <p>[平日] 9:00〜17:30 22:00〜24:00</p>
                 </section>
             </div>
         </article>

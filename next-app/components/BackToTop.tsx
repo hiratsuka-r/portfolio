@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { smoothScrollTo } from '../utils/scroll';
 
 const SHOW_AFTER_SCROLL_Y = 200;
 
@@ -29,7 +30,7 @@ export const BackToTop = () => {
             <button
                 className="nav-toTop__btn"
                 type="button"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                onClick={() => smoothScrollTo(0)}
             >
                 <i className="fa-solid fa-shoe-prints fa-rotate-270 fa-lg" aria-hidden="true"></i>
                 <span className="btn-text">TOP</span>
