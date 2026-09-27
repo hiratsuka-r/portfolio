@@ -644,11 +644,12 @@ body.is-modal-open {
 .work-modal__nav-button {
     align-items: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 
-    img {
-        height: 40px;
-        width: 40px;
+    .icon-arrow {
+        color: $color-work;
+        height: 45px;
+        width: 45px;
     }
 
     &.disabled {

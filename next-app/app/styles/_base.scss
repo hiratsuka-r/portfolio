@@ -85,6 +85,32 @@ h4 {
     margin-bottom: 16px;
 }
 
+/**
+ * SVGアイコンをmask-imageで表示するための共通クラス。
+ * 塗り色はbackground-color: currentColorで決まるため、
+ * 利用側でcolorを指定するだけで表示箇所ごとに色を切り替えられる。
+ */
+.icon-arrow {
+    background-color: currentColor;
+    display: inline-block;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+}
+
+.icon-arrow--prev {
+    -webkit-mask-image: url('/portfolio/img/arrow_prev.svg');
+    mask-image: url('/portfolio/img/arrow_prev.svg');
+}
+
+.icon-arrow--next {
+    -webkit-mask-image: url('/portfolio/img/arrow_next.svg');
+    mask-image: url('/portfolio/img/arrow_next.svg');
+}
+
 @media screen and (max-width: $media-tablet) {
     .media-br__tablet {
         display: none;

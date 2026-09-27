@@ -254,11 +254,9 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                                 onClick={onPrev}
                                 aria-label="前の制作実績を表示"
                             >
-                                <Image
-                                    src="/portfolio/img/arrow_prev.svg"
-                                    alt=""
-                                    width={45}
-                                    height={45}
+                                <span
+                                    className="icon-arrow icon-arrow--prev"
+                                    aria-hidden="true"
                                 />
                             </button>
                             <button
@@ -270,11 +268,9 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                                 onClick={onNext}
                                 aria-label="次の制作実績を表示"
                             >
-                                <Image
-                                    src="/portfolio/img/arrow_next.svg"
-                                    alt=""
-                                    width={45}
-                                    height={45}
+                                <span
+                                    className="icon-arrow icon-arrow--next"
+                                    aria-hidden="true"
                                 />
                             </button>
                         </div>

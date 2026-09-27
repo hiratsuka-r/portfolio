@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { AnimatedHeading } from './AnimatedHeading';
 import { timeline } from '../data/profile';
 
@@ -199,7 +198,7 @@ export function ProfileTimeline() {
                         onClick={() => moveTimeline('prev')}
                         aria-label="前の経歴を表示"
                     >
-                        <Image src="/portfolio/img/arrow_prev.svg" alt="" width={45} height={45} />
+                        <span className="icon-arrow icon-arrow--prev" aria-hidden="true" />
                     </button>
                     <button
                         className={`arrow__next${canMoveNext ? '' : ' disabled'}`}
@@ -208,7 +207,7 @@ export function ProfileTimeline() {
                         onClick={() => moveTimeline('next')}
                         aria-label="次の経歴を表示"
                     >
-                        <Image src="/portfolio/img/arrow_next.svg" alt="" width={45} height={45} />
+                        <span className="icon-arrow icon-arrow--next" aria-hidden="true" />
                     </button>
                 </div>
             </section>

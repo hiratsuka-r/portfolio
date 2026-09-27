@@ -54,12 +54,12 @@ export const Footer = () => {
                         PROFILE
                     </a>
                     <span aria-hidden="true">/</span>
-                    <a href="#works" onClick={handleAnchorClick}>
-                        WORKS
-                    </a>
-                    <span aria-hidden="true">/</span>
                     <a href="#skills" onClick={handleAnchorClick}>
                         SKILLS
+                    </a>
+                    <span aria-hidden="true">/</span>
+                    <a href="#works" onClick={handleAnchorClick}>
+                        WORKS
                     </a>
                 </nav>
 
