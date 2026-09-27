@@ -29,3 +29,7 @@ npm run build
 ```
 
 生成された`next-app/out/`の内容を`docs/`へ配置して公開します。
+
+## 依存パッケージ
+
+`next-app/package.json`の`xlsx`は、脆弱性のあるnpmレジストリ版を避けるため、SheetJS公式CDNの`0.20.2` tarballを指定し、`overrides`でも同じ配布元に固定しています。この指定は意図的なため、通常のnpmバージョン指定へ戻さないでください。
