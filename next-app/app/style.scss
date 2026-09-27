@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 @use 'normalize.scss';
-@use './styles/base';
-@use './styles/profile';
-@use './styles/works';
-@use './styles/navigation';
+@use './styles/_base.scss';
+@use './styles/_profile.scss';
+@use './styles/_works.scss';
+@use './styles/_navigation.scss';

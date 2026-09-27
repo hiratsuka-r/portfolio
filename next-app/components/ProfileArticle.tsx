@@ -2,7 +2,12 @@ import Image from 'next/image';
 import { AnimatedHeading } from './AnimatedHeading';
 import { profileName, skillGroups, timeline } from '../data/profile';
 
+/**
+ * プロフィール、経歴、スキル、対応可能な業務を表示する記事セクション。
+ * @returns プロフィールの記事要素。
+ */
 export function ProfileArticle() {
+    // プロフィール、経歴、スキル、対応業務を各セクションとして表示する。
     return (
         <article className="article article--profile">
             <AnimatedHeading className="heading js_move-heading is-animated-top" level={1}>

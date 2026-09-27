@@ -7,19 +7,33 @@ import type { Work } from '../data/works';
 const labels: Record<string, React.ReactNode> = {
     serviceType: '種類',
     industry: '分野',
-    format: '制作形態',
     period: '期間',
     process: '担当工程',
     role: '担当',
     teamSize: '体制',
 };
 
+const basicInfoOrder = [
+    'serviceType',
+    'industry',
+    'period',
+    'role',
+    'process',
+    'teamSize',
+] as const;
+
 interface Props {
     work: Work | null;
     onClose: () => void;
 }
 
+/**
+ * 選択された制作実績の詳細情報をモーダルで表示する。
+ * @param props 表示対象の制作実績とモーダルを閉じるコールバック。
+ * @returns 制作実績の詳細モーダル。対象がない場合は`null`。
+ */
 export function WorkDetailModal({ work, onClose }: Props) {
+    // 詳細モーダルを開いた直後に、閉じるボタンへフォーカスを移す。
     const closeButtonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
@@ -28,14 +42,21 @@ export function WorkDetailModal({ work, onClose }: Props) {
 
     if (!work) return null;
     const project = typeof work.project === 'string' ? work.project : work.project?.name;
+    const [title, titleSuffix] = work.title.split(' - ', 2);
     const company =
         work.project && typeof work.project === 'object' ? work.project.company : undefined;
+    const basicInfoCount =
+        basicInfoOrder.filter((key) => work.basicInfo?.[key]).length + (company ? 1 : 0);
+    // タグ表示の共通形式を生成する。
+    /** 文字列の配列を共通タグ要素へ変換する。 */
     const tags = (values: string[]) =>
         values.map((tag) => (
             <span className="label-genre" key={tag}>
                 {tag}
             </span>
         ));
+    // 内容が存在するセクションだけを描画し、空の見出しを表示しない。
+    /** 内容がある場合だけ、モーダル内の見出し付きセクションを生成する。 */
     const section = (title: string, content: React.ReactNode, className = '') =>
         content ? (
             <section className={`work-modal__section ${className}`}>
@@ -71,7 +92,18 @@ export function WorkDetailModal({ work, onClose }: Props) {
                                         {tags(work.category)}
                                     </div>
                                 )}
-                                <h2 id="work-modal-title">{work.title}</h2>
+                                <h2 id="work-modal-title">
+                                    {titleSuffix ? (
+                                        <>
+                                            <span className="work-modal__title">{title}</span>
+                                            <span className="work-modal__title-suffix">
+                                                - {titleSuffix}
+                                            </span>
+                                        </>
+                                    ) : (
+                                        work.title
+                                    )}
+                                </h2>
                                 {(work.description || work.overview) && (
                                     <p className="work-modal__summary">
                                         {work.description || work.overview}
@@ -129,17 +161,23 @@ export function WorkDetailModal({ work, onClose }: Props) {
                                 {(work.basicInfo || company) &&
                                     section(
                                         '基本情報',
-                                        <dl>
-                                            {Object.entries(work.basicInfo ?? {})
-                                                .filter(([, value]) => value)
-                                                .map(([key, value]) => (
+                                        <dl
+                                            className={`work-modal__basic-info--${
+                                                basicInfoCount % 2 === 0 ? 'even' : 'odd'
+                                            }`}
+                                        >
+                                            {basicInfoOrder.map((key) => {
+                                                const value = work.basicInfo?.[key];
+                                                if (!value) return null;
+                                                return (
                                                     <span key={key}>
-                                                        <dt>{labels[key] ?? key}</dt>
+                                                        <dt>{labels[key]}</dt>
                                                         <dd>{value}</dd>
                                                     </span>
-                                                ))}
+                                                );
+                                            })}
                                             {company && (
-                                                <span>
+                                                <span className="work-modal__basic-item--company">
                                                     <dt>参画先</dt>
                                                     <dd>{company}</dd>
                                                 </span>
@@ -147,6 +185,17 @@ export function WorkDetailModal({ work, onClose }: Props) {
                                         </dl>,
                                         'work-modal__section--basic'
                                     )}
+                                {section(
+                                    '担当業務',
+                                    work.responsibilities?.length ? (
+                                        <ul>
+                                            {work.responsibilities.map((item) => (
+                                                <li key={item}>{item}</li>
+                                            ))}
+                                        </ul>
+                                    ) : null,
+                                    'work-modal__section--responsibilities'
+                                )}
                                 {section(
                                     '工夫した点・成果',
                                     work.achievements?.length ? (
@@ -160,17 +209,6 @@ export function WorkDetailModal({ work, onClose }: Props) {
                                 )}
                             </div>
                             <div className="work-modal__column work-modal__column--right">
-                                {section(
-                                    '担当業務',
-                                    work.responsibilities?.length ? (
-                                        <ul>
-                                            {work.responsibilities.map((item) => (
-                                                <li key={item}>{item}</li>
-                                            ))}
-                                        </ul>
-                                    ) : null,
-                                    'work-modal__section--responsibilities'
-                                )}
                                 {section(
                                     '使用技術',
                                     work.technologies && (

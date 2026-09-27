@@ -4,10 +4,17 @@ import { useEffect, useState } from 'react';
 
 const SHOW_AFTER_SCROLL_Y = 200;
 
+/**
+ * スクロール位置に応じて表示状態を切り替えるページ上部移動UI。
+ * @returns ページ上部へ戻るナビゲーション。
+ */
 export function BackToTop() {
+    // ページ上部付近ではボタンを隠し、スクロール後に表示する。
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        // 現在位置を初期反映し、以後のスクロールで表示状態を更新する。
+        /** 現在のスクロール位置からボタンの表示状態を更新する。 */
         const updateVisibility = () => {
             setIsVisible(window.scrollY > SHOW_AFTER_SCROLL_Y);
         };

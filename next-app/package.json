@@ -8,7 +8,9 @@
         "build": "next build",
         "start": "next start",
         "lint": "eslint .",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "generateWorks": "node tools/works/generate-works.js",
+        "generate": "node tools/works/generate-works.js"
     },
     "keywords": [],
     "author": "",
@@ -27,7 +29,8 @@
         "eslint": "^9.39.5",
         "eslint-config-next": "^16.3.6",
         "sass": "^1.105.0",
-        "typescript": "^6.0.3"
+        "typescript": "^6.0.3",
+        "xlsx": "^0.18.5"
     },
     "allowScripts": {
         "@parcel/watcher@2.6.0": true,

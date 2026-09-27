@@ -2,7 +2,12 @@ import { works } from '../data/works';
 import { AnimatedHeading } from './AnimatedHeading';
 import { WorksSection } from './WorksSection';
 
+/**
+ * 制作実績の説明と一覧をまとめた記事セクションを表示する。
+ * @returns 制作実績の記事要素。
+ */
 export function WorkArticle() {
+    // 制作実績の説明と一覧表示をまとめたページセクションを描画する。
     return (
         <article className="article article--work">
             <AnimatedHeading className="heading js_move-heading is-animated-slash">

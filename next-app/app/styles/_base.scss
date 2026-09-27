@@ -9,10 +9,8 @@
 }
 
 html {
-    font-family: 'Kiwi Maru', serif;
+    font-family: 'YakuHanJP', 'Kiwi Maru', serif;
     font-feature-settings: 'palt';
-    font-weight: 400;
-    line-height: 1.8;
 }
 
 body {
@@ -23,6 +21,7 @@ body {
 html,
 body {
     font-size: 62.5%;
+    line-height: 2rem;
 }
 
 button {
@@ -64,7 +63,7 @@ h4 {
 
 .heading {
     color: #fff;
-    font-size: 2.8rem;
+    font-size: 2.9rem;
     font-weight: 800;
     line-height: 1.6rem;
     margin: 0;
@@ -124,10 +123,10 @@ h4 {
 }
 
 .is-animated-hover {
-    transition: all 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
     &:hover {
         cursor: pointer;
-        transform: scale(0.98);
+        transform: translateY(-2px);
     }
 }
 
