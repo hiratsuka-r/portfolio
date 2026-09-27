@@ -340,11 +340,7 @@ const validateWorkbook = (workbook, workSheets) => {
     const titles = [];
     for (const sheetName of workSheets) {
         titles.push(
-            validateSheetStructure(
-                sheetName,
-                readRows(workbook.Sheets[sheetName]),
-                referenceLayout
-            )
+            validateSheetStructure(sheetName, readRows(workbook.Sheets[sheetName]), referenceLayout)
         );
     }
     validateUniqueTitles(titles);
