@@ -632,6 +632,35 @@ body.is-modal-open {
     text-align: left;
 }
 
+/* ナビゲーション > ページトップに戻る */
+
+.work-modal__nav {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 24px;
+}
+
+.work-modal__nav-button {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    img {
+        height: 40px;
+        width: 40px;
+    }
+
+    &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+.work-modal__nav-button--prev {
+    margin-right: 20px;
+}
+
 @media screen and (max-width: $media-tablet) {
     .work {
         width: 48%;
@@ -748,5 +777,3 @@ body.is-modal-open {
         border-bottom: 1px solid #dbe5ec;
     }
 }
-
-/* ナビゲーション > ページトップに戻る */
