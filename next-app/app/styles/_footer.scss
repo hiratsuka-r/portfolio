@@ -113,18 +113,6 @@
     user-select: none;
 }
 
-.footer__availability {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 24px;
-    color: #66736b;
-    font-size: 11px;
-    line-height: 1.6;
-    text-align: left;
-}
-
 .footer__bottom {
     display: flex;
     align-items: center;
@@ -140,6 +128,14 @@
     font-size: 10px;
     line-height: 1.5;
     letter-spacing: 0.05em;
+}
+
+.footer__invoice-number {
+    margin: 4px 0 0;
+    color: #7d8981;
+    font-size: 9px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
 }
 
 @media screen and (max-width: 900px) {
@@ -160,7 +156,7 @@
     }
 
     .footer__message {
-        margin-top: 34px;
+        margin-top: 24px;
         padding: 28px 0 0;
         text-align: center;
     }
@@ -208,7 +204,7 @@
     }
 
     .footer__message {
-        margin-top: 34px;
+        margin-top: 24px;
         padding: 28px 0 0;
         text-align: center;
     }
@@ -232,10 +228,6 @@
         line-height: 2;
     }
 
-    .footer__description br {
-        display: none;
-    }
-
     .footer__nav {
         flex-wrap: wrap;
         gap: 12px 14px;
@@ -254,13 +246,6 @@
     .footer__bottom {
         margin-top: 28px;
         padding-top: 16px;
-    }
-
-    .footer__availability {
-        align-items: center;
-        flex-direction: column;
-        gap: 2px;
-        margin-top: 20px;
     }
 
     .footer__copyright {

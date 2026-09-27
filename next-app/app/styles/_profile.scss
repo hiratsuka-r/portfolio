@@ -53,6 +53,25 @@
     margin-bottom: 24px;
 }
 
+.capabilities__list {
+    border-top: 1px solid #dbe5ec;
+    margin-top: 24px;
+    padding-top: 24px;
+}
+
+.capabilities__availability {
+    align-items: baseline;
+    border-top: 1px solid #dbe5ec;
+    color: #70818d;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.2rem;
+    gap: 8px 16px;
+    line-height: 1.6;
+    margin-top: 24px;
+    padding: 16px 4px 0;
+}
+
 .profile-skill__primary {
     display: flex;
     flex-wrap: wrap;
