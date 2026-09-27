@@ -1,0 +1,41 @@
+{
+    "name": "next-app",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit",
+        "generateWorks": "node tools/works/generate-works.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "module",
+    "dependencies": {
+        "next": "^16.3.6",
+        "normalize.scss": "^0.1.0",
+        "react": "^19.3.0",
+        "react-dom": "^19.3.0",
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
+    },
+    "devDependencies": {
+        "@types/node": "^26.6.2",
+        "@types/react": "^19.3.0",
+        "@types/react-dom": "^19.3.0",
+        "eslint": "^9.39.5",
+        "eslint-config-next": "^16.3.6",
+        "sass": "^1.105.0",
+        "typescript": "^6.0.3"
+    },
+    "allowScripts": {
+        "@parcel/watcher@2.6.0": true,
+        "unrs-resolver@1.12.2": true
+    },
+    "overrides": {
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
+    }
+}

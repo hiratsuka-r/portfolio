@@ -1,0 +1,148 @@
+@use 'variables' as *;
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'YakuHanJP', 'Kiwi Maru', serif;
+    font-feature-settings: 'palt';
+}
+
+body {
+    background: $color-white;
+    color: $color-black;
+}
+
+html,
+body {
+    font-size: 62.5%;
+    line-height: 2rem;
+}
+
+button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+a {
+    color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+}
+
+/* all */
+.wrapper + .wrapper {
+    padding-top: 32px;
+}
+
+.article {
+    padding: 40px 0;
+    overflow: hidden;
+}
+
+.section {
+    position: relative;
+    width: 86vw;
+    min-width: calc($media-sp__small * 0.86);
+    max-width: $media-pc;
+    margin: 0 auto;
+}
+
+.heading {
+    color: #fff;
+    font-size: 2.9rem;
+    font-weight: 800;
+    line-height: 1.6rem;
+    margin: 0;
+    padding: 0 0 24px;
+    text-align: center;
+
+    &::before {
+        content: '＼';
+        padding-right: 0.8rem;
+    }
+
+    &:after {
+        content: '／';
+        padding-left: 0.8rem;
+    }
+}
+
+.u-mb {
+    margin-bottom: 16px;
+}
+
+@media screen and (max-width: $media-tablet) {
+    .media-br__tablet {
+        display: none;
+    }
+}
+
+@media screen and (max-width: $media-sp) {
+    .media-br__sp {
+        display: none;
+    }
+}
+
+/* animated */
+.is-animated-top {
+    opacity: 0;
+    transform: translateY(4.8rem);
+    transition:
+        opacity 0.5s ease 0.5s,
+        transform 0.5s ease 0.5s;
+
+    &.js_is-animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.is-animated-slash {
+    transition:
+        transform 0.5s cubic-bezier(0.5, 2, 0.8, 0.7) 0.25s,
+        opacity 0.5s ease-out 0.25s;
+    transform: translateY(25vh) rotate(-45deg) scale(1.25);
+
+    &.js_is-animated {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+.is-animated-hover {
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-2px);
+    }
+}
+
+.is-animated-fluffy {
+    animation: fluffy 6s ease-in-out infinite alternate;
+    transition: 3ms ease-in-out;
+
+    @keyframes fluffy {
+        0% {
+            transform: translate(0, 0) rotate(-3deg);
+        }
+        50% {
+            transform: translate(0, -3px) rotate(0deg);
+        }
+        100% {
+            transform: translate(0, 0) rotate(3deg);
+        }
+    }
+}
