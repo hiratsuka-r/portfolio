@@ -21,14 +21,15 @@ cd next-app
 npm run dev
 ```
 
-GitHub Pages用の静的ファイルは、次のコマンドで生成します。
+GitHub Pagesへのデプロイは、`main`ブランチへのpushまたはActionsからの手動実行で行います。
+Workflowが`next-app/`でビルドし、`next-app/out/`をGitHub Pagesへ直接デプロイします。
 
 ```powershell
 cd next-app
 npm run build
 ```
 
-生成された`next-app/out/`の内容を`docs/`へ配置して公開します。
+GitHub Pagesの公開元は、リポジトリ設定の **GitHub Actions** にしてください。
 
 ## 依存パッケージ
 
