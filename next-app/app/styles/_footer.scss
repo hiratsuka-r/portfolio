@@ -11,14 +11,15 @@
 
 .footer__main {
     display: grid;
-    grid-template-columns: minmax(280px, 0.9fr) minmax(360px, 1.1fr);
+    grid-template-columns: minmax(280px, 1fr) minmax(360px, 1fr);
     align-items: center;
-    gap: 72px;
+    gap: 24px;
 }
 
 .footer__brand {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .footer__logo {
@@ -44,6 +45,7 @@
 .footer__message {
     position: relative;
     padding-left: 56px;
+    text-align: left;
 }
 
 .footer__message::before {
@@ -138,12 +140,25 @@
     }
 
     .footer__main {
-        grid-template-columns: 1fr 1fr;
-        gap: 48px;
+        display: block;
+    }
+
+    .footer__brand {
+        justify-content: center;
     }
 
     .footer__message {
-        padding-left: 40px;
+        margin-top: 34px;
+        padding: 28px 0 0;
+        text-align: center;
+    }
+
+    .footer__message::before {
+        top: 0;
+        left: 50%;
+        width: 42px;
+        height: 1px;
+        transform: translateX(-50%);
     }
 
     .footer__catch {
@@ -155,7 +170,7 @@
     }
 
     .footer__nav {
-        margin-top: 48px;
+        margin-top: 36px;
     }
 }
 

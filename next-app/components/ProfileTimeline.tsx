@@ -7,6 +7,8 @@ import { timeline } from '../data/profile';
 
 /** 横スクロール表示と縦並び表示を切り替える境界値。 */
 const TIMELINE_BREAKPOINT = 599;
+/** 横並び時のタイムラインカードの最小高さ。 */
+const MIN_TIMELINE_CARD_HEIGHT = 150;
 /** 要素位置の比較時に吸収する小数誤差。 */
 const POSITION_EPSILON = 1;
 /** 最初のカードを戻し切らずに残す表示幅。 */
@@ -58,7 +60,10 @@ export function ProfileTimeline() {
 
             if (landscape) {
                 // 横並びではカードの高さをそろえ、タイムラインの上下余白を確保する。
-                const maxHeight = Math.max(...cards.map((card) => card.offsetHeight));
+                const maxHeight = Math.max(
+                    MIN_TIMELINE_CARD_HEIGHT,
+                    ...cards.map((card) => card.offsetHeight)
+                );
                 cards.forEach((card) => {
                     card.style.height = `${maxHeight}px`;
                 });

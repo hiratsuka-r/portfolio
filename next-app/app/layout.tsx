@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './style.scss';
 
 export const metadata: Metadata = {
-    title: 'hiratsuka-r | ポートフォリオ',
+    title: 'かえるラボ｜Web開発・UI/UXデザイン',
     description: 'hiratsuka-rのポートフォリオ',
     metadataBase: new URL('https://hiratsuka-r.github.io/'),
     alternates: {
