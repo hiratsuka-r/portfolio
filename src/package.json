@@ -4,10 +4,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "watch": "npm run watch:sass",
-    "build": "npm run build:sass",
-    "watch:sass": "sass --no-source-map sass/:../docs/css/ --watch",
-    "build:sass": "sass --no-source-map sass/:../docs/css/ --style compressed"
+    "watch": "gulp watch",
+    "build": "gulp build"
   },
   "dependencies": {
     "gulp": "^5.0.0",

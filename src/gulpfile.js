@@ -7,22 +7,28 @@ const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 
 //sass -> css(minify) -> output:docs
-gulp.task("sass", () => {
+const sassTask = () => {
   return gulp
     .src("sass/**/*.scss")
     .pipe(sass())
     .pipe(rename({ extname: ".min.css" }))
     .pipe(cleanCss())
     .pipe(gulp.dest("../docs/css"));
-});
+};
 
 //js -> js(minify) -> output:docs
-gulp.task("js_minify", () => {
+const jsMinifyTask = () => {
   return gulp
     .src("js/**/*.js")
     .pipe(uglify())
     .pipe(rename({ extname: ".min.js" }))
     .pipe(gulp.dest("../docs/js"));
-});
+};
 
+gulp.task("sass", sassTask);
+gulp.task("js_minify", jsMinifyTask);
 gulp.task("build", gulp.series("sass", "js_minify"));
+gulp.task("watch", () => {
+  gulp.watch("sass/**/*.scss", gulp.series("sass"));
+  gulp.watch("js/**/*.js", gulp.series("js_minify"));
+});
