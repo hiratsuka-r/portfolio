@@ -5,7 +5,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "watch": "gulp watch",
-    "build": "gulp build"
+    "build": "gulp build",
+    "serve": "node server.js"
   },
   "dependencies": {
     "gulp": "^5.0.0",

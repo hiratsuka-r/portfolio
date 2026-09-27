@@ -70,7 +70,9 @@
    */
   const _isElementInViewArea = (el, position) => {
     const elRect = el.getBoundingClientRect();
-    const wrapRect = document.querySelector(".js_timeline-wrap").getBoundingClientRect();
+    const wrapRect = document
+      .querySelector(".js_timeline-wrap")
+      .getBoundingClientRect();
     if (position === "first") {
       return elRect.top >= 0 && wrapRect.left <= elRect.left;
     } else {

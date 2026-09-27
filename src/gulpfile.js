@@ -25,10 +25,18 @@ const jsMinifyTask = () => {
     .pipe(gulp.dest("../docs/js"));
 };
 
+const copyDataTask = () => {
+  return gulp
+    .src("data/**/*.json")
+    .pipe(gulp.dest("../docs/data"));
+};
+
 gulp.task("sass", sassTask);
 gulp.task("js_minify", jsMinifyTask);
-gulp.task("build", gulp.series("sass", "js_minify"));
+gulp.task("copy_data", copyDataTask);
+gulp.task("build", gulp.series("sass", "js_minify", "copy_data"));
 gulp.task("watch", () => {
   gulp.watch("sass/**/*.scss", gulp.series("sass"));
   gulp.watch("js/**/*.js", gulp.series("js_minify"));
+  gulp.watch("data/**/*.json", gulp.series("copy_data"));
 });
