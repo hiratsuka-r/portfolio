@@ -80,38 +80,15 @@
     padding-left: 32px;
 }
 
-@media screen and (max-width: $media-tablet) {
-    .section--profile-name {
-        flex-direction: column;
-    }
-    .profile-name__content {
-        padding-top: 16px;
-        padding-left: 0;
-    }
-}
-
-@media screen and (max-width: $media-sp) {
-    .heading--profile-name {
-        display: block;
-        padding-bottom: 16px;
-    }
-
-    .profile-name__heading {
-        display: none;
-    }
-
-    .profile-name__image {
-        position: relative;
-        top: 0;
-        left: 0;
-    }
-}
-
 /* プロフィール > タイムライン */
 
 .section--profile-timeline {
     overflow-x: hidden;
     white-space: nowrap;
+}
+
+.timeline-layout--mobile {
+    white-space: normal;
 }
 
 .timelines {
@@ -133,6 +110,17 @@
     width: calc(420px / 2);
     word-break: auto-phrase;
 
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: -12px;
+        width: 2px;
+        height: 16px;
+        background-color: #ccc;
+        transform: translateY(-50%) rotate(50deg);
+    }
+
     &:after {
         background: $color-sub;
         border-radius: 50%;
@@ -146,14 +134,18 @@
         width: 12px;
     }
 
-    &:first-child {
+    &--first {
         margin-left: 0;
         width: (32px + 8px);
+
+        &::before {
+            content: none;
+        }
     }
 
-    &:last-child {
+    &--last {
         margin-right: 0;
-        width: 400px;
+        width: 380px;
 
         &:after {
             background: #ccc;
@@ -163,7 +155,42 @@
             left: 0;
             top: 0;
             transform: translateY(0);
-            width: 800px;
+            width: 400px;
+        }
+    }
+}
+
+.timeline-layout--desktop {
+    .timeline:nth-child(odd) {
+        &::before {
+            right: 0;
+            top: 15px;
+            width: 2px;
+            height: 16px;
+            transform: translateY(-50%) rotate(-50deg);
+        }
+
+        .timeline__card {
+            top: -16px;
+            transform: translateY(-100%);
+
+            &:before {
+                border-color: #ccc transparent transparent transparent;
+                border-width: 12px 12px 0 0;
+                top: 100%;
+            }
+        }
+    }
+
+    .timeline:nth-child(even) {
+        .timeline__card {
+            top: calc(100% + 16px);
+
+            &:before {
+                border-color: transparent transparent transparent #ccc;
+                border-width: 12px 0 0 12px;
+                top: -12px;
+            }
         }
     }
 }
@@ -182,8 +209,9 @@
     padding: 8px 16px 16px;
     position: absolute;
     white-space: normal;
-    width: 420px;
+    width: 380px;
     animation: opacity 1s linear 1;
+    overflow: hidden;
 
     @keyframes opacity {
         0% {
@@ -193,52 +221,23 @@
             opacity: 1;
         }
     }
-
-    &:before {
-        border-style: solid;
-        content: '';
-        height: 0;
-        left: 14px;
-        position: absolute;
-        top: 100%;
-        width: 0;
-    }
 }
 
-.timeline:nth-child(odd) {
-    .timeline__card {
-        top: -16px;
-        transform: translateY(-100%);
-
-        &:before {
-            border-color: #ccc transparent transparent transparent;
-            border-width: 12px 12px 0 0;
-            top: 100%;
-        }
-    }
-}
-
-.timeline:nth-child(even) {
-    .timeline__card {
-        top: calc(100% + 16px);
-
-        &:before {
-            border-color: transparent transparent transparent #ccc;
-            border-width: 12px 0 0 12px;
-            top: -12px;
-        }
-    }
+.timeline__content {
+    position: relative;
+    z-index: 1;
 }
 
 .timeline__time {
     color: #ccc;
-    display: block;
-    font-size: 2.5rem;
+    font-size: 6rem;
+    line-height: 6rem;
     font-weight: bold;
-    line-height: 1.5rem;
+    display: block;
     position: absolute;
-    bottom: 0;
-    right: 12px;
+    bottom: -6px;
+    right: -6px;
+    z-index: 0;
 }
 
 .timeline-arrows {
@@ -260,16 +259,7 @@
     margin-right: 20px;
 }
 
-@media screen and (max-width: $media-tablet__timeline) {
-    .heading--timeline__timeline {
-        margin: 0 0 32px;
-        padding: 0;
-    }
-
-    .section--timeline__timeline {
-        padding-bottom: 0;
-    }
-
+.timeline-layout--mobile {
     .timelines {
         margin-left: 0;
         padding: 0;
@@ -284,11 +274,7 @@
         margin: 0;
         width: auto;
 
-        &:first-child {
-            width: auto;
-        }
-
-        &:last-child,
+        &--last,
         &:nth-last-child(2) div:before,
         &:after {
             display: none;
@@ -297,12 +283,20 @@
 
     .timeline__card {
         height: auto !important;
+        left: auto;
         margin: 0 auto 24px;
-        position: static;
+        position: relative;
         width: 100%;
     }
 
-    .timeline:nth-child(odd) {
+    .timeline {
+        &::before {
+            top: -12px;
+            left: 50%;
+            right: 0;
+            transform: translateY(-50%) rotate(0);
+        }
+
         .timeline__card {
             transform: none;
 
@@ -317,31 +311,11 @@
         }
     }
 
-    .timeline:nth-child(even) {
-        .timeline__card {
-            &:before {
-                border: none;
-                border-left: 3px solid #ccc;
-                height: 24px;
-                left: 50%;
-                top: 100%;
-                transform: translateX(-50%);
-            }
-        }
-    }
-
-    .timeline__time {
-        font-size: 1.2rem;
-        color: $color-black;
-        position: relative;
-        bottom: auto;
-        right: auto;
-    }
-
     .timeline-arrows {
         display: none;
     }
 }
+
 /* プロフィール > 業務 */
 .profile-menu {
     list-style: square;
@@ -398,12 +372,37 @@
     position: absolute;
     right: 32px;
     text-align: right;
+}
 
-    @media screen and (max-width: $media-tablet) {
+@media (max-width: $media-tablet) {
+    .section--profile-name {
+        flex-direction: column;
+    }
+    .profile-name__content {
+        padding-top: 16px;
+        padding-left: 0;
+    }
+
+    .profile-skill__etc {
         bottom: 0;
         position: relative;
         right: 0;
     }
 }
 
-/* 制作物 */
+@media (max-width: $media-sp) {
+    .heading--profile-name {
+        display: block;
+        padding-bottom: 16px;
+    }
+
+    .profile-name__heading {
+        display: none;
+    }
+
+    .profile-name__image {
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+}

@@ -24,7 +24,7 @@ export const timeline: TimelineEntry[] = [
         content: [
             { text: '高等専門学校 物質工学科に進学。' },
             {
-                text: '在学中は白衣で試験管を振りつつ、アルバイト先の映画館で作品を観ることに没頭する。',
+                text: '在学中は化学・工学を学びながら、アルバイト先の映画館で作品を観ることに没頭する。',
                 lineBreak: true,
             },
         ],
@@ -45,17 +45,17 @@ export const timeline: TimelineEntry[] = [
         year: '2010',
         content: [
             { text: '進路変更し' },
-            { text: 'ウェブ制作の専門学校', emphasis: true },
+            { text: 'WEB制作の専門学校', emphasis: true },
             { text: 'に進学。' },
             {
-                text: '在学中はデザインやページ制作の基礎を学びつつ、ひたすら作品作りに没頭する。',
+                text: 'デザインやWEB制作の基礎を学びながら、ひたすら作品作りに没頭する。',
+                lineBreak: true,
+            },
+            {
+                text: '卒業時、主席として表彰を受ける。',
                 lineBreak: true,
             },
         ],
-    },
-    {
-        year: '2011',
-        content: [{ text: 'ポートフォリオ片手に就職活動中、東日本大震災に見舞われる。' }],
     },
     {
         year: '2012',
@@ -75,6 +75,16 @@ export const timeline: TimelineEntry[] = [
                 lineBreak: true,
             },
             { text: 'としてシステム開発に関わる。' },
+        ],
+    },
+    {
+        year: '2017~',
+        content: [
+            { text: 'フリーランスとして独立。' },
+            {
+                text: '企業からの開発依頼を中心に、WEBサイト・WEBシステムの開発に携わる。',
+                lineBreak: true,
+            },
         ],
     },
 ];

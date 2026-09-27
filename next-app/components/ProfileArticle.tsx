@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { AnimatedHeading } from './AnimatedHeading';
-import { profileName, skillGroups, timeline } from '../data/profile';
+import { ProfileTimeline } from './ProfileTimeline';
+import { profileName, skillGroups } from '../data/profile';
 
 /**
  * プロフィール、経歴、スキル、対応可能な業務を表示する記事セクション。
@@ -47,34 +48,7 @@ export function ProfileArticle() {
                 </section>
             </div>
 
-            <div className="wrapper">
-                <section className="section section--profile-timeline">
-                    <AnimatedHeading className="heading--profile-timeline js_move-heading is-animated-top">
-                        現在までのあゆみ
-                    </AnimatedHeading>
-                    <ol className="timelines">
-                        {timeline.map(({ year, content }) => (
-                            <li className="timeline" key={year}>
-                                <div className="timeline__card">
-                                    <time className="timeline__time">{year}</time>
-                                    {content.map((segment, index) => (
-                                        <span key={`${year}-${index}`}>
-                                            {segment.lineBreak && <br />}
-                                            {segment.emphasis ? (
-                                                <span className="timeline__subcolor">
-                                                    {segment.text}
-                                                </span>
-                                            ) : (
-                                                segment.text
-                                            )}
-                                        </span>
-                                    ))}
-                                </div>
-                            </li>
-                        ))}
-                    </ol>
-                </section>
-            </div>
+            <ProfileTimeline />
 
             <div className="wrapper">
                 <section className="section section--profile-note">
