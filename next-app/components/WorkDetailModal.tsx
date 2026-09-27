@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 import type { Work } from '../data/works';
 
 const labels: Record<string, React.ReactNode> = {

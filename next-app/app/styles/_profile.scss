@@ -4,6 +4,77 @@
     background: $color-profile;
 }
 
+.article--approach,
+.article--capabilities,
+.article--skills,
+.article--timeline {
+    background: $color-profile;
+}
+
+.article--capabilities,
+.article--timeline {
+    padding-bottom: 72px;
+}
+
+.section--approach,
+.section--profile-note {
+    color: $color-black;
+    font-size: 1.6rem;
+    line-height: 2.8rem;
+    background: $color-white;
+    border-radius: 20px;
+    padding: 32px;
+}
+
+.approach__description,
+.capabilities__description {
+    margin: 0;
+}
+
+.approach__consultation {
+    border-top: 1px solid #dbe5ec;
+    margin-top: 28px;
+    padding-top: 24px;
+}
+
+.approach__consultation h2 {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.approach__consultation ul {
+    list-style: square;
+    margin: 0 0 0 2rem;
+    padding: 0;
+}
+
+.capabilities__description {
+    margin-bottom: 24px;
+}
+
+.profile-skill__primary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.profile-skill__details {
+    margin-top: 24px;
+}
+
+.profile-skill__details summary {
+    cursor: pointer;
+    color: $color-profile;
+    font-size: 1.5rem;
+    font-weight: 700;
+    list-style-position: inside;
+}
+
+.profile-skill__details-content {
+    padding-top: 20px;
+}
+
 .section--profile-name,
 .section--profile-note,
 .section--profile-timeline {
@@ -320,7 +391,7 @@
 /* プロフィール > 業務 */
 .profile-menu {
     list-style: square;
-    margin: 0 0 0 1.8rem;
+    margin: 0 0 0 2rem;
     padding: 0;
 }
 

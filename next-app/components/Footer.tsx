@@ -51,17 +51,30 @@ export const Footer = () => {
 
                 <nav className="footer__nav" aria-label="フッターナビゲーション">
                     <a href="#profile" onClick={handleAnchorClick}>
-                        PROFILE
+                        プロフィール
                     </a>
                     <span aria-hidden="true">/</span>
-                    <a href="#skills" onClick={handleAnchorClick}>
-                        SKILLS
+                    <a href="#capabilities" onClick={handleAnchorClick}>
+                        できること
                     </a>
                     <span aria-hidden="true">/</span>
                     <a href="#works" onClick={handleAnchorClick}>
-                        WORKS
+                        制作実績
+                    </a>
+                    <span aria-hidden="true">/</span>
+                    <a href="#skills" onClick={handleAnchorClick}>
+                        スキル
+                    </a>
+                    <span aria-hidden="true">/</span>
+                    <a href="#timeline" onClick={handleAnchorClick}>
+                        あゆみ
                     </a>
                 </nav>
+
+                <div className="footer__availability">
+                    <span>対応可能な時間帯</span>
+                    <span>[平日] 9:00〜17:30 / 22:00〜24:00</span>
+                </div>
 
                 <div className="footer__bottom">
                     <p className="footer__copyright">

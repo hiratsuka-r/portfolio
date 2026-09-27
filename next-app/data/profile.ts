@@ -89,6 +89,10 @@ export const timeline: TimelineEntry[] = [
     },
 ];
 
+export const primarySkills = [
+    ['主なスキル', ['TypeScript', 'JavaScript', 'Next.js', 'React', 'PHP', 'Java', 'AWS', 'SQL']],
+] as const;
+
 export const skillGroups = [
     [
         '言語・マークアップ',
