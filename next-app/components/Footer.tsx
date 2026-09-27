@@ -71,15 +71,15 @@ export const Footer = () => {
                     </a>
                 </nav>
 
-                <div className="footer__availability">
-                    <span>対応可能な時間帯</span>
-                    <span>[平日] 9:00〜17:30 / 22:00〜24:00</span>
-                </div>
-
                 <div className="footer__bottom">
-                    <p className="footer__copyright">
-                        © 2017–{new Date().getFullYear()} かえるラボ｜Web開発・UI/UXデザイン
-                    </p>
+                    <div className="footer__legal">
+                        <p className="footer__copyright">
+                            © 2017–{new Date().getFullYear()} かえるラボ
+                        </p>
+                        <p className="footer__invoice-number">
+                            適格請求書発行事業者登録番号：T2810973054129
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>

@@ -29,6 +29,10 @@ export function ProfileCapabilities() {
                             <li key={capability}>{capability}</li>
                         ))}
                     </ul>
+                    <div className="capabilities__availability">
+                        <span>対応可能な時間帯</span>
+                        <span>[平日] 9:00〜17:30 / 22:00〜24:00</span>
+                    </div>
                 </section>
             </div>
         </article>
