@@ -8,6 +8,9 @@ export const metadata: Metadata = {
     alternates: {
         canonical: '/portfolio/',
     },
+    icons: {
+        icon: '/portfolio/img/logo_green.png',
+    },
     robots: { index: false, follow: false },
 };
 
