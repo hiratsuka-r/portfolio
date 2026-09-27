@@ -1,6 +1,6 @@
-import { works } from '../data/works';
-import { AnimatedHeading } from './AnimatedHeading';
-import { WorksSection } from './WorksSection';
+import { AnimatedHeading } from '@/components/AnimatedHeading';
+import { WorksSection } from '@/components/WorksSection';
+import { works } from '@/data/works';
 
 /**
  * 制作実績の説明と一覧をまとめた記事セクションを表示する。

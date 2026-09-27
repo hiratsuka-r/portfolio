@@ -1,9 +1,9 @@
 'use client';
 
+import { WorkCard } from '@/components/WorkCard';
+import { WorkDetailModal } from '@/components/WorkDetailModal';
+import type { Work } from '@/data/works';
 import { useEffect, useRef, useState } from 'react';
-import type { Work } from '../data/works';
-import { WorkCard } from './WorkCard';
-import { WorkDetailModal } from './WorkDetailModal';
 
 /**
  * 制作実績カードの一覧と詳細モーダルを管理するセクション。

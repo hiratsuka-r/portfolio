@@ -1,6 +1,6 @@
+import { AnimatedHeading } from '@/components/AnimatedHeading';
+import { profileName } from '@/data/profile';
 import Image from 'next/image';
-import { profileName } from '../data/profile';
-import { AnimatedHeading } from './AnimatedHeading';
 
 /**
  * プロフィールを表示する記事セクション。

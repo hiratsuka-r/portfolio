@@ -1,8 +1,8 @@
 'use client';
 
+import type { Work } from '@/data/works';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
-import type { Work } from '../data/works';
 
 const labels: Record<string, React.ReactNode> = {
     serviceType: '種類',
@@ -254,10 +254,7 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                                 onClick={onPrev}
                                 aria-label="前の制作実績を表示"
                             >
-                                <span
-                                    className="icon-arrow icon-arrow--prev"
-                                    aria-hidden="true"
-                                />
+                                <span className="icon-arrow icon-arrow--prev" aria-hidden="true" />
                             </button>
                             <button
                                 className={`work-modal__nav-button work-modal__nav-button--next${
@@ -268,10 +265,7 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                                 onClick={onNext}
                                 aria-label="次の制作実績を表示"
                             >
-                                <span
-                                    className="icon-arrow icon-arrow--next"
-                                    aria-hidden="true"
-                                />
+                                <span className="icon-arrow icon-arrow--next" aria-hidden="true" />
                             </button>
                         </div>
                     </div>

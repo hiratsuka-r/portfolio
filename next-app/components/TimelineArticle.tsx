@@ -1,4 +1,4 @@
-import { ProfileTimeline } from './ProfileTimeline';
+import { ProfileTimeline } from '@/components/ProfileTimeline';
 
 /**
  * 現在までのあゆみを表示する記事セクション。

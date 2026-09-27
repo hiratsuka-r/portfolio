@@ -1,5 +1,5 @@
+import type { Work } from '@/data/works';
 import type { CSSProperties } from 'react';
-import type { Work } from '../data/works';
 
 interface WorkCardProps {
     work: Work;

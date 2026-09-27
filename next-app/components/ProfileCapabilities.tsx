@@ -1,4 +1,4 @@
-import { AnimatedHeading } from './AnimatedHeading';
+import { AnimatedHeading } from '@/components/AnimatedHeading';
 
 const capabilities = [
     'Webサイト・Webサービスのフロントエンド開発',

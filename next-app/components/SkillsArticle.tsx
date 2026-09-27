@@ -1,5 +1,5 @@
-import { primarySkills, skillGroups } from '../data/profile';
-import { AnimatedHeading } from './AnimatedHeading';
+import { AnimatedHeading } from '@/components/AnimatedHeading';
+import { primarySkills, skillGroups } from '@/data/profile';
 
 /**
  * 主な技術と詳細なスキル一覧を表示する記事セクション。

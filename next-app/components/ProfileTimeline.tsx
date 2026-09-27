@@ -1,8 +1,8 @@
 'use client';
 
+import { AnimatedHeading } from '@/components/AnimatedHeading';
+import { timeline } from '@/data/profile';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { timeline } from '../data/profile';
-import { AnimatedHeading } from './AnimatedHeading';
 
 /** 横スクロール表示と縦並び表示を切り替える境界値。 */
 const TIMELINE_BREAKPOINT = 599;

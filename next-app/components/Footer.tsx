@@ -1,8 +1,8 @@
 'use client';
 
+import { smoothScrollTo } from '@/utils/scroll';
 import Image from 'next/image';
 import type { MouseEvent } from 'react';
-import { smoothScrollTo } from '../utils/scroll';
 
 export const Footer = () => {
     const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>) => {

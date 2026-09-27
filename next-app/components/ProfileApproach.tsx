@@ -1,4 +1,4 @@
-import { AnimatedHeading } from './AnimatedHeading';
+import { AnimatedHeading } from '@/components/AnimatedHeading';
 
 /**
  * 仕事への向き合い方と相談例を表示する記事セクション。
