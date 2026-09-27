@@ -25,14 +25,18 @@ const basicInfoOrder = [
 interface Props {
     work: Work | null;
     onClose: () => void;
+    onPrev: () => void;
+    onNext: () => void;
+    hasPrev: boolean;
+    hasNext: boolean;
 }
 
 /**
  * 選択された制作実績の詳細情報をモーダルで表示する。
- * @param props 表示対象の制作実績とモーダルを閉じるコールバック。
+ * @param props 表示対象の制作実績、モーダルを閉じるコールバック、前後の実績への移動コールバックと可否。
  * @returns 制作実績の詳細モーダル。対象がない場合は`null`。
  */
-export function WorkDetailModal({ work, onClose }: Props) {
+export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNext }: Props) {
     // 詳細モーダルを開いた直後に、閉じるボタンへフォーカスを移す。
     const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -240,6 +244,40 @@ export function WorkDetailModal({ work, onClose }: Props) {
                             </div>
                         </div>
                         {work.note && <p className="work-modal__note">{work.note}</p>}
+                        <div className="work-modal__nav">
+                            <button
+                                className={`work-modal__nav-button work-modal__nav-button--prev${
+                                    hasPrev ? '' : ' disabled'
+                                }`}
+                                type="button"
+                                disabled={!hasPrev}
+                                onClick={onPrev}
+                                aria-label="前の制作実績を表示"
+                            >
+                                <Image
+                                    src="/portfolio/img/arrow_prev.svg"
+                                    alt=""
+                                    width={45}
+                                    height={45}
+                                />
+                            </button>
+                            <button
+                                className={`work-modal__nav-button work-modal__nav-button--next${
+                                    hasNext ? '' : ' disabled'
+                                }`}
+                                type="button"
+                                disabled={!hasNext}
+                                onClick={onNext}
+                                aria-label="次の制作実績を表示"
+                            >
+                                <Image
+                                    src="/portfolio/img/arrow_next.svg"
+                                    alt=""
+                                    width={45}
+                                    height={45}
+                                />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
