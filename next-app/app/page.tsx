@@ -8,7 +8,7 @@ import { SkillsArticle } from '@/components/SkillsArticle';
 import { TimelineArticle } from '@/components/TimelineArticle';
 import { WorkArticle } from '@/components/WorkArticle';
 
-export default function Home() {
+const Home = () => {
     return (
         <LocaleProvider>
             <LanguageSwitcher />
@@ -24,4 +24,6 @@ export default function Home() {
             <Footer />
         </LocaleProvider>
     );
-}
+};
+
+export default Home;

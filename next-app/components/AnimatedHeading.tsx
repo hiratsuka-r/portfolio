@@ -2,18 +2,18 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-interface Props {
+type Props = {
     children: React.ReactNode;
     className: string;
     level?: 1 | 2;
-}
+};
 
 /**
  * 見出しが表示領域に入ったときにアニメーションを開始する見出しコンポーネント。
  * @param props 見出しの内容、クラス名、見出しレベル。
  * @returns 表示監視機能を持つ見出し要素。
  */
-export function AnimatedHeading({ children, className, level = 2 }: Props) {
+export const AnimatedHeading = ({ children, className, level = 2 }: Props) => {
     // 見出しが表示領域に入ったタイミングでアニメーション用クラスを付与する。
     const headingRef = useRef<HTMLHeadingElement>(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -46,4 +46,4 @@ export function AnimatedHeading({ children, className, level = 2 }: Props) {
             {children}
         </Tag>
     );
-}
+};

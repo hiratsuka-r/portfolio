@@ -6,10 +6,10 @@ import { timeline } from '@/data/profile';
 import type { TranslationKey } from '@/tools/dictionary/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-interface RichTextProps {
+type RichTextProps = {
     text: string;
     emphasisClassName: string;
-}
+};
 
 /**
  * 翻訳文内の改行と強調指定を表示要素へ変換する。
@@ -54,7 +54,7 @@ const TIMELINE_EDGE_SPACE = 40;
  * 末尾の空要素は横移動の終端を示すためだけに使用する。
  * @returns 経歴タイムライン。
  */
-export function ProfileTimeline() {
+export const ProfileTimeline = () => {
     const { t } = useTranslation();
 
     const wrapperRef = useRef<HTMLElement>(null);
@@ -225,4 +225,4 @@ export function ProfileTimeline() {
             </section>
         </div>
     );
-}
+};

@@ -19,7 +19,7 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
  * サイト全体で利用する言語状態を提供する。
  * 初回表示は日本語とし、ブラウザに保存された言語があれば復元する。
  */
-export function LocaleProvider({ children }: { children: React.ReactNode }) {
+export const LocaleProvider = ({ children }: { children: React.ReactNode }) => {
     const [locale, setLocale] = useState<Locale>(defaultLocale);
 
     useEffect(() => {
@@ -49,22 +49,22 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     );
 
     return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
-}
+};
 
 /**
  * 現在の言語と翻訳関数を取得する。
  * Providerの外側で呼び出した場合は、設定漏れを検知できるよう例外を投げる。
  */
-export function useTranslation() {
+export const useTranslation = () => {
     const context = useContext(LocaleContext);
     if (!context) {
         throw new Error('useTranslation must be used inside LocaleProvider');
     }
     return context;
-}
+};
 
 /** 日本語と英語を選択できるセグメント型の言語切り替えUI。 */
-export function LanguageSwitcher() {
+export const LanguageSwitcher = () => {
     const { locale, setLocale } = useTranslation();
 
     return (
@@ -89,4 +89,4 @@ export function LanguageSwitcher() {
             </button>
         </div>
     );
-}
+};

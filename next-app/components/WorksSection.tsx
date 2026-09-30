@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react';
  * @param works 表示する制作実績の一覧。
  * @returns 制作実績一覧と選択中の詳細モーダル。
  */
-export function WorksSection({ works: sourceWorks }: { works: WorkSource[] }) {
+export const WorksSection = ({ works: sourceWorks }: { works: WorkSource[] }) => {
     const { locale } = useTranslation();
     const works = sourceWorks.map((source) => localizedWork(source, locale));
     // 選択中の制作実績のインデックスを保持し、前後の実績へ移動できるようにする。
@@ -77,4 +77,4 @@ export function WorksSection({ works: sourceWorks }: { works: WorkSource[] }) {
             />
         </>
     );
-}
+};

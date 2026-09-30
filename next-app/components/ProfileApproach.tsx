@@ -7,7 +7,7 @@ import { useTranslation } from '@/components/LocaleProvider';
  * 仕事への向き合い方と相談例を表示する記事セクション。
  * @returns アプローチの記事要素。
  */
-export function ProfileApproach() {
+export const ProfileApproach = () => {
     const { t } = useTranslation();
 
     return (
@@ -30,4 +30,4 @@ export function ProfileApproach() {
             </div>
         </article>
     );
-}
+};

@@ -9,7 +9,7 @@ import type { TranslationKey } from '@/tools/dictionary/i18n';
  * 主な技術と詳細なスキル一覧を表示する記事セクション。
  * @returns スキルの記事要素。
  */
-export function SkillsArticle() {
+export const SkillsArticle = () => {
     const { t } = useTranslation();
 
     return (
@@ -53,4 +53,4 @@ export function SkillsArticle() {
             </div>
         </article>
     );
-}
+};

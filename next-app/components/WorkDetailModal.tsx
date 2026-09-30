@@ -7,21 +7,21 @@ import { useEffect, useRef } from 'react';
 
 const basicInfoOrder = ['serviceType', 'industry', 'period', 'role', 'process', 'teamSize'] as const;
 
-interface Props {
+type Props = {
     work: Work | null;
     onClose: () => void;
     onPrev: () => void;
     onNext: () => void;
     hasPrev: boolean;
     hasNext: boolean;
-}
+};
 
 /**
  * 選択された制作実績の詳細情報をモーダルで表示する。
  * @param props 表示対象の制作実績、モーダルを閉じるコールバック、前後の実績への移動コールバックと可否。
  * @returns 制作実績の詳細モーダル。対象がない場合は`null`。
  */
-export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNext }: Props) {
+export const WorkDetailModal = ({ work, onClose, onPrev, onNext, hasPrev, hasNext }: Props) => {
     const { t } = useTranslation();
     const labels: Record<string, React.ReactNode> = {
         serviceType: t('works.共通.種類'),
@@ -221,4 +221,4 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
             </div>
         </div>
     );
-}
+};

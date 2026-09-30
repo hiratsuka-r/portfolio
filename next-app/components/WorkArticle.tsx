@@ -1,15 +1,15 @@
 'use client';
 
 import { AnimatedHeading } from '@/components/AnimatedHeading';
+import { useTranslation } from '@/components/LocaleProvider';
 import { WorksSection } from '@/components/WorksSection';
 import { works } from '@/data/works';
-import { useTranslation } from '@/components/LocaleProvider';
 
 /**
  * 制作実績の説明と一覧をまとめた記事セクションを表示する。
  * @returns 制作実績の記事要素。
  */
-export function WorkArticle() {
+export const WorkArticle = () => {
     const { t } = useTranslation();
 
     // 制作実績の説明と一覧表示をまとめたページセクションを描画する。
@@ -31,4 +31,4 @@ export function WorkArticle() {
             </div>
         </article>
     );
-}
+};

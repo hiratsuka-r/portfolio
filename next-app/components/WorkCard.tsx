@@ -4,18 +4,18 @@ import { useTranslation } from '@/components/LocaleProvider';
 import type { Work } from '@/data/works';
 import type { CSSProperties } from 'react';
 
-interface WorkCardProps {
+type WorkCardProps = {
     work: Work;
     onSelect: (work: Work) => void;
     isPriority?: boolean;
-}
+};
 
 /**
  * 1件分の制作実績を操作可能なカードとして表示する。
  * @param props 制作実績、選択時のコールバック、画像優先読み込み設定。
  * @returns 制作実績カード。
  */
-export function WorkCard({ work, onSelect, isPriority = false }: WorkCardProps) {
+export const WorkCard = ({ work, onSelect, isPriority = false }: WorkCardProps) => {
     const { t } = useTranslation();
 
     // カテゴリと担当タグを統合し、重複を除いてカードへ表示する。
@@ -65,4 +65,4 @@ export function WorkCard({ work, onSelect, isPriority = false }: WorkCardProps) 
             </span>
         </button>
     );
-}
+};

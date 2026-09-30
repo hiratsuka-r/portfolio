@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     robots: { index: false, follow: false },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     return (
         <html lang="ja">
             <head>
@@ -31,4 +31,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <body id="top">{children}</body>
         </html>
     );
-}
+};
+
+export default RootLayout;

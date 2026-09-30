@@ -9,7 +9,7 @@ import Image from 'next/image';
  * プロフィールを表示する記事セクション。
  * @returns プロフィールの記事要素。
  */
-export function ProfileArticle() {
+export const ProfileArticle = () => {
     const { t } = useTranslation();
 
     return (
@@ -39,4 +39,4 @@ export function ProfileArticle() {
             </div>
         </article>
     );
-}
+};

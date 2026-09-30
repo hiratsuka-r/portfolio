@@ -7,7 +7,7 @@ import { useTranslation } from '@/components/LocaleProvider';
  * 対応可能な業務を表示する記事セクション。
  * @returns できることの記事要素。
  */
-export function ProfileCapabilities() {
+export const ProfileCapabilities = () => {
     const { t } = useTranslation();
 
     return (
@@ -31,4 +31,4 @@ export function ProfileCapabilities() {
             </div>
         </article>
     );
-}
+};
