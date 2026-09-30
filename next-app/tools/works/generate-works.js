@@ -23,6 +23,7 @@ const inputPath = path.resolve(
     process.argv[2] || path.join(projectRoot, 'data', 'works_master.xlsx')
 );
 const outputPath = path.resolve(process.argv[3] || path.join(projectRoot, 'data', 'works.ts'));
+const localePath = path.resolve(path.join(projectRoot, 'locales', 'ja.json'));
 
 const generatedTypes = `export type Project = string | { name: string; company?: string };
 export type Technologies = Record<string, string[]>;
@@ -82,6 +83,7 @@ const requiredManagementFields = ['ID', '画像', 'リンク', 'プロジェク�
 // ---------------------------------------------------------------------------
 
 const normalize = (value) => String(value ?? '').trim();
+const normalizeWorkId = (value) => `data-${normalize(value).replace(/^data-/, '')}`;
 
 /**
  * Excelのセルを、改行・カンマ・読点・スラッシュ区切りの配列へ変換する。
@@ -265,7 +267,7 @@ const parseWorkSheet = (sheetName, sheet) => {
         indexes.技術 >= 0 ? readTechnologies(getSectionRows(rows, indexes, '技術'), sheetName) : {};
 
     return {
-        id: management.ID,
+        id: normalizeWorkId(management.ID),
         title,
         subtitle,
         category,
@@ -374,6 +376,70 @@ const writeWorksFile = (works) => {
     fs.writeFileSync(outputPath, `\uFEFF${source}`, { encoding: 'utf8' });
 };
 
+const writeJapaneseLocale = (works) => {
+    const locale = fs.existsSync(localePath)
+        ? JSON.parse(fs.readFileSync(localePath, 'utf8'))
+        : {};
+    const workLocale = locale.works || {};
+    const preservedWorkMessages = {
+        ...(workLocale.見出し !== undefined ? { 見出し: workLocale.見出し } : {}),
+        ...(workLocale.説明 !== undefined
+            ? { 説明: workLocale.説明 }
+            : {}),
+    };
+
+    locale.works = {
+        ...preservedWorkMessages,
+        ...Object.fromEntries(
+            works.map((work) => [
+                work.id,
+                {
+                    タイトル: work.title,
+                    サブタイトル: work.subtitle,
+                    カテゴリ: work.category,
+                    担当タグ: work.responsibilityTags,
+                    プロジェクト: work.project
+                        ? {
+                              案件名:
+                                  typeof work.project === 'string'
+                                      ? work.project
+                                      : work.project.name,
+                              ...(typeof work.project === 'object' && work.project.company
+                                  ? { 会社名: work.project.company }
+                                  : {}),
+                          }
+                        : undefined,
+                    概要: work.description,
+                    基本情報: work.basicInfo
+                        ? Object.fromEntries(
+                              Object.entries(work.basicInfo).map(([key, value]) => [
+                                  {
+                                      serviceType: '種類',
+                                      industry: '分野',
+                                      period: '期間',
+                                      role: '担当',
+                                      process: '担当工程',
+                                      teamSize: '体制',
+                                  }[key] || key,
+                                  value,
+                              ])
+                          )
+                        : undefined,
+                    担当内容: work.responsibilities,
+                    技術: work.technologies,
+                    実績: work.achievements,
+                    注記: work.note,
+                },
+            ])
+        ),
+    };
+
+    fs.mkdirSync(path.dirname(localePath), { recursive: true });
+    fs.writeFileSync(localePath, `${JSON.stringify(locale, null, 4)}\n`, {
+        encoding: 'utf8',
+    });
+};
+
 const generateWorks = () => {
     const workbook = readWorkbook();
     const workSheets = getWorkSheetNames(workbook);
@@ -385,8 +451,10 @@ const generateWorks = () => {
     validateWorkbook(workbook, workSheets);
     const works = parseWorks(workbook, workSheets);
     writeWorksFile(works);
+    writeJapaneseLocale(works);
     console.log(`✓ ${works.length} Works detected`);
     console.log(`✓ data/works.ts generated`);
+    console.log(`✓ locales/ja.json works messages generated`);
     console.log('Works generation completed.');
 };
 
