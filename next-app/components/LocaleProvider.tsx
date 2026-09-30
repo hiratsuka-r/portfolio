@@ -5,6 +5,12 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 // ブラウザに保存する言語設定のキー。
 const LOCALE_STORAGE_KEY = 'portfolio-locale';
+const LOCALE_CLASS_NAMES = ['locale-ja', 'locale-en'] as const;
+
+const setLocaleClass = (locale: Locale) => {
+    document.documentElement.classList.remove(...LOCALE_CLASS_NAMES);
+    document.documentElement.classList.add(`locale-${locale}`);
+};
 
 // 子コンポーネントへ渡す言語状態と翻訳関数の型。
 type LocaleContextValue = {
@@ -29,7 +35,9 @@ export const LocaleProvider = ({ children }: { children: React.ReactNode }) => {
             setLocale(savedLocale);
         }
         // スクリーンリーダーなどにも現在の表示言語を伝える。
-        document.documentElement.lang = savedLocale === 'en' ? 'en' : 'ja';
+        const currentLocale = savedLocale === 'en' ? 'en' : 'ja';
+        document.documentElement.lang = currentLocale;
+        setLocaleClass(currentLocale);
     }, []);
 
     // 言語が変わったときだけContextの値を作り直し、利用コンポーネントを再描画する。
@@ -40,6 +48,7 @@ export const LocaleProvider = ({ children }: { children: React.ReactNode }) => {
                 // 次回訪問時にも同じ言語を使えるよう、選択結果を保存する。
                 window.localStorage.setItem(LOCALE_STORAGE_KEY, nextLocale);
                 document.documentElement.lang = nextLocale;
+                setLocaleClass(nextLocale);
                 setLocale(nextLocale);
             },
             // 現在の言語を指定して辞書から文言を取得する。

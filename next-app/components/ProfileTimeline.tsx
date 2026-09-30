@@ -55,7 +55,7 @@ const TIMELINE_EDGE_SPACE = 40;
  * @returns 経歴タイムライン。
  */
 export const ProfileTimeline = () => {
-    const { t } = useTranslation();
+    const { t, locale } = useTranslation();
 
     const wrapperRef = useRef<HTMLElement>(null);
     const timelineRef = useRef<HTMLOListElement>(null);
@@ -95,6 +95,10 @@ export const ProfileTimeline = () => {
 
             if (landscape) {
                 // 横並びではカードの高さをそろえ、タイムラインの上下余白を確保する。
+                // 前回の計算結果を残したまま測ると、内容量ではなく固定済みの高さを再利用してしまう。
+                cards.forEach((card) => {
+                    card.style.height = '';
+                });
                 const maxHeight = Math.max(MIN_TIMELINE_CARD_HEIGHT, ...cards.map((card) => card.offsetHeight));
                 cards.forEach((card) => {
                     card.style.height = `${maxHeight}px`;
@@ -112,7 +116,7 @@ export const ProfileTimeline = () => {
         updateLayout();
         window.addEventListener('resize', updateLayout);
         return () => window.removeEventListener('resize', updateLayout);
-    }, []);
+    }, [locale]);
 
     /**
      * 先頭カードと末尾の補助要素の位置から矢印の活性状態を更新する。
