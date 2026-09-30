@@ -4,6 +4,39 @@ import { AnimatedHeading } from '@/components/AnimatedHeading';
 import { timeline } from '@/data/profile';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+interface RichTextProps {
+    text: string;
+    emphasisClassName: string;
+}
+
+/**
+ * 翻訳文内の改行と強調指定を表示要素へ変換する。
+ * `{{...}}` は翻訳しない文字列、`<em>...</em>` は強調表示、
+ * `\n` は改行として扱う。
+ */
+const RichText = ({ text, emphasisClassName }: RichTextProps) => {
+    const tokens = text.split(/(\n|\{\{[^{}]*\}\}|<em>.*?<\/em>)/g).filter(Boolean);
+    return (
+        <>
+            {tokens.map((token, index) => {
+                if (token === '\n') return <br key={`${token}-${index}`} />;
+
+                if (token.startsWith('<em>') && token.endsWith('</em>')) {
+                    return (
+                        <span className={emphasisClassName} key={`${token}-${index}`}>
+                            {token.slice(4, -5)}
+                        </span>
+                    );
+                }
+
+                const content =
+                    token.startsWith('{{') && token.endsWith('}}') ? token.slice(2, -2) : token;
+                return <span key={`${token}-${index}`}>{content}</span>;
+            })}
+        </>
+    );
+};
+
 /** 横スクロール表示と縦並び表示を切り替える境界値。 */
 const TIMELINE_BREAKPOINT = 599;
 /** 横並び時のタイムラインカードの最小高さ。 */
@@ -166,25 +199,16 @@ export function ProfileTimeline() {
                         }
                     }}
                 >
-                    {timeline.map(({ year, content }, index) => (
+                    {timeline.map(({ year, text }, index) => (
                         <li
                             className={`timeline${index === 0 ? ' timeline--first' : ''}`}
                             key={year}
                         >
                             <div className="timeline__card">
                                 <time className="timeline__time">{year}</time>
-                                {content.map((segment, index) => (
-                                    <span className="timeline__content" key={`${year}-${index}`}>
-                                        {segment.lineBreak && <br />}
-                                        {segment.emphasis ? (
-                                            <span className="timeline__subcolor">
-                                                {segment.text}
-                                            </span>
-                                        ) : (
-                                            segment.text
-                                        )}
-                                    </span>
-                                ))}
+                                <span className="timeline__content">
+                                    <RichText text={text} emphasisClassName="timeline__subcolor" />
+                                </span>
                             </div>
                         </li>
                     ))}
