@@ -1,9 +1,10 @@
 import '@/app/style.scss';
+import { t } from '@/tools/dictionary/i18n';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'かえるラボ｜Web開発・UI/UXデザイン',
-    description: 'hiratsuka-rのポートフォリオ',
+    title: t('site.サイト名'),
+    description: t('site.説明'),
     metadataBase: new URL('https://hiratsuka-r.github.io/'),
     alternates: {
         canonical: '/portfolio/',

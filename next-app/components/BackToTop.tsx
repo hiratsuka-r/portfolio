@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useTranslation } from '@/components/LocaleProvider';
 import { smoothScrollTo } from '@/utils/scroll';
+import { useEffect, useState } from 'react';
 
 const SHOW_AFTER_SCROLL_Y = 200;
 
@@ -10,6 +11,8 @@ const SHOW_AFTER_SCROLL_Y = 200;
  * @returns ページ上部へ戻るナビゲーション。
  */
 export const BackToTop = () => {
+    const { t } = useTranslation();
+
     // ページ上部付近ではボタンを隠し、スクロール後に表示する。
     const [isVisible, setIsVisible] = useState(false);
 
@@ -27,13 +30,9 @@ export const BackToTop = () => {
 
     return (
         <nav className={`nav-toTop${isVisible ? ' js_is-animated' : ''}`}>
-            <button
-                className="nav-toTop__btn"
-                type="button"
-                onClick={() => smoothScrollTo(0)}
-            >
+            <button className="nav-toTop__btn" type="button" onClick={() => smoothScrollTo(0)}>
                 <i className="fa-solid fa-shoe-prints fa-rotate-270 fa-lg" aria-hidden="true"></i>
-                <span className="btn-text">TOP</span>
+                <span className="btn-text">{t('site.ページトップ')}</span>
             </button>
         </nav>
     );

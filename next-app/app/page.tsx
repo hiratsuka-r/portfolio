@@ -1,5 +1,6 @@
 import { BackToTop } from '@/components/BackToTop';
 import { Footer } from '@/components/Footer';
+import { LanguageSwitcher, LocaleProvider } from '@/components/LocaleProvider';
 import { ProfileApproach } from '@/components/ProfileApproach';
 import { ProfileArticle } from '@/components/ProfileArticle';
 import { ProfileCapabilities } from '@/components/ProfileCapabilities';
@@ -9,7 +10,8 @@ import { WorkArticle } from '@/components/WorkArticle';
 
 export default function Home() {
     return (
-        <>
+        <LocaleProvider>
+            <LanguageSwitcher />
             <main>
                 <ProfileArticle />
                 <ProfileApproach />
@@ -20,6 +22,6 @@ export default function Home() {
                 <BackToTop />
             </main>
             <Footer />
-        </>
+        </LocaleProvider>
     );
 }

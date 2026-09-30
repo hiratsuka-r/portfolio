@@ -1,3 +1,6 @@
+'use client';
+
+import { useTranslation } from '@/components/LocaleProvider';
 import type { Work } from '@/data/works';
 import type { CSSProperties } from 'react';
 
@@ -13,10 +16,10 @@ interface WorkCardProps {
  * @returns 制作実績カード。
  */
 export function WorkCard({ work, onSelect, isPriority = false }: WorkCardProps) {
+    const { t } = useTranslation();
+
     // カテゴリと担当タグを統合し、重複を除いてカードへ表示する。
-    const tags = [...work.category.slice(1), ...work.responsibilityTags].filter(
-        (tag, index, all) => all.indexOf(tag) === index
-    );
+    const tags = [...work.category.slice(1), ...work.responsibilityTags].filter((tag, index, all) => all.indexOf(tag) === index);
     const projectName = typeof work.project === 'string' ? work.project : work.project?.name;
     const [title, titleSuffix] = work.title.split(' - ', 2);
     const imageStyle = { '--work-image': `url(${work.image})` } as CSSProperties;
@@ -26,12 +29,10 @@ export function WorkCard({ work, onSelect, isPriority = false }: WorkCardProps) 
             className="work is-animated-hover"
             type="button"
             onClick={() => onSelect(work)}
-            aria-label={`${work.title}の詳細を表示`}
+            aria-label={`${work.title}${t('works.詳細を表示')}`}
         >
             <span className="work-image" style={imageStyle}>
-                {work.category[0] && (
-                    <span className="work-category-badge">{work.category[0]}</span>
-                )}
+                {work.category[0] && <span className="work-category-badge">{work.category[0]}</span>}
             </span>
             <span className="work-name">
                 {titleSuffix ? (
@@ -55,9 +56,7 @@ export function WorkCard({ work, onSelect, isPriority = false }: WorkCardProps) 
             )}
             {projectName && (
                 <span className="work-project">
-                    <span>
-                        {work.basicInfo?.format === '個人制作' ? '制作区分' : '参画プロジェクト'}
-                    </span>
+                    <span>{work.basicInfo?.format === '個人制作' ? t('works.制作区分') : t('works.参画プロジェクト')}</span>
                     {projectName}
                 </span>
             )}

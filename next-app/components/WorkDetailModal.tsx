@@ -1,26 +1,11 @@
 'use client';
 
+import { useTranslation } from '@/components/LocaleProvider';
 import type { Work } from '@/data/works';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
-const labels: Record<string, React.ReactNode> = {
-    serviceType: '種類',
-    industry: '分野',
-    period: '期間',
-    process: '担当工程',
-    role: '担当',
-    teamSize: '体制',
-};
-
-const basicInfoOrder = [
-    'serviceType',
-    'industry',
-    'period',
-    'role',
-    'process',
-    'teamSize',
-] as const;
+const basicInfoOrder = ['serviceType', 'industry', 'period', 'role', 'process', 'teamSize'] as const;
 
 interface Props {
     work: Work | null;
@@ -37,6 +22,16 @@ interface Props {
  * @returns 制作実績の詳細モーダル。対象がない場合は`null`。
  */
 export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNext }: Props) {
+    const { t } = useTranslation();
+    const labels: Record<string, React.ReactNode> = {
+        serviceType: t('works.共通.種類'),
+        industry: t('works.共通.分野'),
+        period: t('works.共通.期間'),
+        process: t('works.共通.担当工程'),
+        role: t('works.共通.担当'),
+        teamSize: t('works.共通.体制'),
+    };
+
     // 詳細モーダルを開いた直後に、閉じるボタンへフォーカスを移す。
     const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -47,10 +42,8 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
     if (!work) return null;
     const project = typeof work.project === 'string' ? work.project : work.project?.name;
     const [title, titleSuffix] = work.title.split(' - ', 2);
-    const company =
-        work.project && typeof work.project === 'object' ? work.project.company : undefined;
-    const basicInfoCount =
-        basicInfoOrder.filter((key) => work.basicInfo?.[key]).length + (company ? 1 : 0);
+    const company = work.project && typeof work.project === 'object' ? work.project.company : undefined;
+    const basicInfoCount = basicInfoOrder.filter((key) => work.basicInfo?.[key]).length + (company ? 1 : 0);
     // タグ表示の共通形式を生成する。
     /** 文字列の配列を共通タグ要素へ変換する。 */
     const tags = (values: string[]) =>
@@ -70,12 +63,7 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
         ) : null;
 
     return (
-        <div
-            className="work-modal is-open"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="work-modal-title"
-        >
+        <div className="work-modal is-open" role="dialog" aria-modal="true" aria-labelledby="work-modal-title">
             <div className="work-modal__overlay" role="presentation" onClick={onClose} />
             <div className="work-modal__frame">
                 <div className="work-modal__content">
@@ -84,46 +72,34 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                         className="work-modal__close"
                         type="button"
                         onClick={onClose}
-                        aria-label="制作物の詳細を閉じる"
+                        aria-label={t('works.共通.詳細を閉じる')}
                     >
                         ×
                     </button>
                     <div className="work-modal__body">
                         <div className="work-modal__hero">
                             <section className="work-modal__header-info">
-                                {work.category.length > 0 && (
-                                    <div className="work-modal__work-type">
-                                        {tags(work.category)}
-                                    </div>
-                                )}
+                                {work.category.length > 0 && <div className="work-modal__work-type">{tags(work.category)}</div>}
                                 <h2 id="work-modal-title">
                                     {titleSuffix ? (
                                         <>
                                             <span className="work-modal__title">{title}</span>
-                                            <span className="work-modal__title-suffix">
-                                                - {titleSuffix}
-                                            </span>
+                                            <span className="work-modal__title-suffix">- {titleSuffix}</span>
                                         </>
                                     ) : (
                                         work.title
                                     )}
                                 </h2>
                                 {(work.description || work.overview) && (
-                                    <p className="work-modal__summary">
-                                        {work.description || work.overview}
-                                    </p>
+                                    <p className="work-modal__summary">{work.description || work.overview}</p>
                                 )}
                                 {work.responsibilityTags.length > 0 && (
-                                    <div className="work-modal__responsibility-tags">
-                                        {tags(work.responsibilityTags)}
-                                    </div>
+                                    <div className="work-modal__responsibility-tags">{tags(work.responsibilityTags)}</div>
                                 )}
                                 {project && (
                                     <p className="work-modal__project">
                                         <span>
-                                            {work.basicInfo?.format === '個人制作'
-                                                ? '制作区分'
-                                                : '参画プロジェクト'}
+                                            {work.basicInfo?.format === '個人制作' ? t('works.制作区分') : t('works.参画プロジェクト')}
                                         </span>
                                         {project}
                                     </p>
@@ -136,27 +112,15 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                                         href={work.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        aria-label={`${work.title}の公開ページを見る`}
+                                        aria-label={`${work.title}${t('works.公開ページを見る')}`}
                                     >
-                                        <Image
-                                            className="work-modal__image"
-                                            src={work.image}
-                                            alt={work.title}
-                                            width={1280}
-                                            height={720}
-                                        />
+                                        <Image className="work-modal__image" src={work.image} alt={work.title} width={1280} height={720} />
                                         <span className="work-modal__image-action">
-                                            公開ページを見る <span>↗</span>
+                                            {t('works.公開ページを見る')} <span>↗</span>
                                         </span>
                                     </a>
                                 ) : (
-                                    <Image
-                                        className="work-modal__image"
-                                        src={work.image}
-                                        alt={work.title}
-                                        width={1280}
-                                        height={720}
-                                    />
+                                    <Image className="work-modal__image" src={work.image} alt={work.title} width={1280} height={720} />
                                 )}
                             </section>
                         </div>
@@ -164,12 +128,8 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                             <div className="work-modal__column work-modal__column--left">
                                 {(work.basicInfo || company) &&
                                     section(
-                                        '基本情報',
-                                        <dl
-                                            className={`work-modal__basic-info--${
-                                                basicInfoCount % 2 === 0 ? 'even' : 'odd'
-                                            }`}
-                                        >
+                                        t('works.共通.基本情報'),
+                                        <dl className={`work-modal__basic-info--${basicInfoCount % 2 === 0 ? 'even' : 'odd'}`}>
                                             {basicInfoOrder.map((key) => {
                                                 const value = work.basicInfo?.[key];
                                                 if (!value) return null;
@@ -182,7 +142,7 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                                             })}
                                             {company && (
                                                 <span className="work-modal__basic-item--company">
-                                                    <dt>参画先</dt>
+                                                    <dt>{t('works.共通.参画先')}</dt>
                                                     <dd>{company}</dd>
                                                 </span>
                                             )}
@@ -190,7 +150,7 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                                         'work-modal__section--basic'
                                     )}
                                 {section(
-                                    '担当業務',
+                                    t('works.共通.担当業務'),
                                     work.responsibilities?.length ? (
                                         <ul>
                                             {work.responsibilities.map((item) => (
@@ -201,7 +161,7 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                                     'work-modal__section--responsibilities'
                                 )}
                                 {section(
-                                    '工夫した点・成果',
+                                    t('works.共通.工夫した点・成果'),
                                     work.achievements?.length ? (
                                         <ul>
                                             {work.achievements.map((item) => (
@@ -214,29 +174,21 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                             </div>
                             <div className="work-modal__column work-modal__column--right">
                                 {section(
-                                    '使用技術',
+                                    t('works.共通.使用技術'),
                                     work.technologies && (
                                         <div>
-                                            {Object.entries(work.technologies).map(
-                                                ([group, values]) => (
-                                                    <div
-                                                        className="work-modal__technology-group"
-                                                        key={group}
-                                                    >
-                                                        <h4>{group}</h4>
-                                                        <div className="work-modal__technologies">
-                                                            {values.map((value) => (
-                                                                <span
-                                                                    className="work-modal__technology"
-                                                                    key={value}
-                                                                >
-                                                                    {value}
-                                                                </span>
-                                                            ))}
-                                                        </div>
+                                            {Object.entries(work.technologies).map(([group, values]) => (
+                                                <div className="work-modal__technology-group" key={group}>
+                                                    <h4>{group}</h4>
+                                                    <div className="work-modal__technologies">
+                                                        {values.map((value) => (
+                                                            <span className="work-modal__technology" key={value}>
+                                                                {value}
+                                                            </span>
+                                                        ))}
                                                     </div>
-                                                )
-                                            )}
+                                                </div>
+                                            ))}
                                         </div>
                                     ),
                                     'work-modal__section--technologies'
@@ -246,24 +198,20 @@ export function WorkDetailModal({ work, onClose, onPrev, onNext, hasPrev, hasNex
                         {work.note && <p className="work-modal__note">{work.note}</p>}
                         <div className="work-modal__nav">
                             <button
-                                className={`work-modal__nav-button work-modal__nav-button--prev${
-                                    hasPrev ? '' : ' disabled'
-                                }`}
+                                className={`work-modal__nav-button work-modal__nav-button--prev${hasPrev ? '' : ' disabled'}`}
                                 type="button"
                                 disabled={!hasPrev}
                                 onClick={onPrev}
-                                aria-label="前の制作実績を表示"
+                                aria-label={t('works.共通.前へ')}
                             >
                                 <span className="icon-arrow icon-arrow--prev" aria-hidden="true" />
                             </button>
                             <button
-                                className={`work-modal__nav-button work-modal__nav-button--next${
-                                    hasNext ? '' : ' disabled'
-                                }`}
+                                className={`work-modal__nav-button work-modal__nav-button--next${hasNext ? '' : ' disabled'}`}
                                 type="button"
                                 disabled={!hasNext}
                                 onClick={onNext}
-                                aria-label="次の制作実績を表示"
+                                aria-label={t('works.共通.次へ')}
                             >
                                 <span className="icon-arrow icon-arrow--next" aria-hidden="true" />
                             </button>
