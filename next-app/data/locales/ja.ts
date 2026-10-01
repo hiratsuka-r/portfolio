@@ -389,6 +389,7 @@ export const messages = {
             担当内容: [],
             技術: {
                 Frontend: ['Next.js', 'TypeScript', 'SCSS'],
+                'CI/CD': ['GitHub Actions'],
                 Tools: ['GitHub', 'GitHub Copilot'],
             },
             実績: [
@@ -416,7 +417,7 @@ export const messages = {
         },
         '開発環境・ツール': {
             見出し: '開発環境・ツール',
-            項目: ['Node.js', 'npm', 'Git', 'GitHub', 'Docker', 'PHPUnit', 'JUnit'],
+            項目: ['Node.js', 'npm', 'Git', 'GitHub', 'Docker', 'PHPUnit', 'JUnit', 'GitHub Actions'],
         },
         AI支援: {
             見出し: 'AI支援',
