@@ -330,6 +330,20 @@ const validateUniqueTitles = (titles) => {
     }
 };
 
+const validateUniqueWorkIds = (works) => {
+    const counts = new Map();
+    for (const work of works) {
+        counts.set(work.id, (counts.get(work.id) || 0) + 1);
+    }
+
+    const duplicateIds = [...counts.entries()]
+        .filter(([, count]) => count > 1)
+        .map(([id]) => id);
+    if (duplicateIds.length > 0) {
+        throw new Error(`Normalized Work IDs must be unique: ${duplicateIds.join(', ')}`);
+    }
+};
+
 /**
  * Workbook全体を検証する。行番号やセル結合には依存しない。
  */
@@ -454,6 +468,7 @@ const generateWorks = () => {
     console.log('Works generation started.');
     validateWorkbook(workbook, workSheets);
     const works = parseWorks(workbook, workSheets);
+    validateUniqueWorkIds(works);
     writeWorksFile(works);
     writeJapaneseLocale(works);
     console.log(`✓ ${works.length} Works detected`);
