@@ -1,3 +1,4 @@
+/* フッター全体の配色と上下の余白。 */
 .footer {
     background: #f3f7f3;
     color: #17231c;
@@ -13,9 +14,10 @@
     display: grid;
     grid-template-columns: minmax(280px, 1fr) minmax(360px, 1fr);
     align-items: center;
-    gap: 24px;
+    gap: 0;
 }
 
+/* ロゴとメッセージを左右に配置するメイン領域。 */
 .footer__brand {
     display: flex;
     align-items: center;
@@ -24,7 +26,7 @@
 
 .footer__logo {
     display: inline-block;
-    width: min(100%, 330px);
+    width: min(100%, 400px);
     text-decoration: none;
     transition:
         opacity 0.3s ease,
@@ -113,6 +115,7 @@
     user-select: none;
 }
 
+/* コピーライトと登録番号を表示する最下部の情報領域。 */
 .footer__bottom {
     display: flex;
     align-items: center;
@@ -139,6 +142,7 @@
 }
 
 @media screen and (max-width: 900px) {
+    /* タブレットではメイン領域を縦方向へ切り替える。 */
     .footer {
         padding: 64px 0 22px;
     }
@@ -183,6 +187,7 @@
 }
 
 @media screen and (max-width: 600px) {
+    /* スマートフォンでは幅と文字サイズをさらに縮小する。 */
     .footer {
         padding: 52px 0 20px;
     }

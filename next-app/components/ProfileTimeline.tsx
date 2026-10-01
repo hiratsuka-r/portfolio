@@ -1,8 +1,42 @@
 'use client';
 
 import { AnimatedHeading } from '@/components/AnimatedHeading';
+import { useTranslation } from '@/components/LocaleProvider';
 import { timeline } from '@/data/profile';
+import type { TranslationKey } from '@/tools/dictionary/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
+
+type RichTextProps = {
+    text: string;
+    emphasisClassName: string;
+};
+
+/**
+ * 翻訳文内の改行と強調指定を表示要素へ変換する。
+ * `{{...}}` は翻訳しない文字列、`<em>...</em>` は強調表示、
+ * `\n` は改行として扱う。
+ */
+const RichText = ({ text, emphasisClassName }: RichTextProps) => {
+    const tokens = text.split(/(\n|\{\{[^{}]*\}\}|<em>.*?<\/em>)/g).filter(Boolean);
+    return (
+        <>
+            {tokens.map((token, index) => {
+                if (token === '\n') return <br key={`${token}-${index}`} />;
+
+                if (token.startsWith('<em>') && token.endsWith('</em>')) {
+                    return (
+                        <span className={emphasisClassName} key={`${token}-${index}`}>
+                            {token.slice(4, -5)}
+                        </span>
+                    );
+                }
+
+                const content = token.startsWith('{{') && token.endsWith('}}') ? token.slice(2, -2) : token;
+                return <span key={`${token}-${index}`}>{content}</span>;
+            })}
+        </>
+    );
+};
 
 /** 横スクロール表示と縦並び表示を切り替える境界値。 */
 const TIMELINE_BREAKPOINT = 599;
@@ -20,7 +54,9 @@ const TIMELINE_EDGE_SPACE = 40;
  * 末尾の空要素は横移動の終端を示すためだけに使用する。
  * @returns 経歴タイムライン。
  */
-export function ProfileTimeline() {
+export const ProfileTimeline = () => {
+    const { t, locale } = useTranslation();
+
     const wrapperRef = useRef<HTMLElement>(null);
     const timelineRef = useRef<HTMLOListElement>(null);
     const [offset, setOffset] = useState(0);
@@ -59,10 +95,11 @@ export function ProfileTimeline() {
 
             if (landscape) {
                 // 横並びではカードの高さをそろえ、タイムラインの上下余白を確保する。
-                const maxHeight = Math.max(
-                    MIN_TIMELINE_CARD_HEIGHT,
-                    ...cards.map((card) => card.offsetHeight)
-                );
+                // 前回の計算結果を残したまま測ると、内容量ではなく固定済みの高さを再利用してしまう。
+                cards.forEach((card) => {
+                    card.style.height = '';
+                });
+                const maxHeight = Math.max(MIN_TIMELINE_CARD_HEIGHT, ...cards.map((card) => card.offsetHeight));
                 cards.forEach((card) => {
                     card.style.height = `${maxHeight}px`;
                 });
@@ -79,7 +116,7 @@ export function ProfileTimeline() {
         updateLayout();
         window.addEventListener('resize', updateLayout);
         return () => window.removeEventListener('resize', updateLayout);
-    }, []);
+    }, [locale]);
 
     /**
      * 先頭カードと末尾の補助要素の位置から矢印の活性状態を更新する。
@@ -98,9 +135,7 @@ export function ProfileTimeline() {
         const wrapperRect = wrapper.getBoundingClientRect();
         const firstRect = firstItem.getBoundingClientRect();
         const lastRect = lastItem.getBoundingClientRect();
-        setCanMovePrev(
-            firstRect.right - TIMELINE_EDGE_SPACE <= wrapperRect.left - POSITION_EPSILON
-        );
+        setCanMovePrev(firstRect.right - TIMELINE_EDGE_SPACE <= wrapperRect.left - POSITION_EPSILON);
         setCanMoveNext(lastRect.right > wrapperRect.right + POSITION_EPSILON);
     }, [isLandscape]);
 
@@ -126,31 +161,24 @@ export function ProfileTimeline() {
         const targetItem = direction === 'prev' ? firstItem : lastItem;
         const targetRect = targetItem.getBoundingClientRect();
         const stepStyles = window.getComputedStyle(stepItem);
-        const stepWidth =
-            stepItem.getBoundingClientRect().width + parseFloat(stepStyles.marginLeft);
+        const stepWidth = stepItem.getBoundingClientRect().width + parseFloat(stepStyles.marginLeft);
         const distance =
-            direction === 'prev'
-                ? wrapperRect.left - (targetRect.right - TIMELINE_EDGE_SPACE)
-                : targetRect.right - wrapperRect.right;
+            direction === 'prev' ? wrapperRect.left - (targetRect.right - TIMELINE_EDGE_SPACE) : targetRect.right - wrapperRect.right;
         const scrollAmount = Math.min(stepWidth, Math.max(0, distance));
 
         if (scrollAmount === 0) return;
 
-        setOffset(
-            (currentOffset) => currentOffset + (direction === 'prev' ? scrollAmount : -scrollAmount)
-        );
+        setOffset((currentOffset) => currentOffset + (direction === 'prev' ? scrollAmount : -scrollAmount));
     };
 
     return (
         <div className="wrapper">
             <section
-                className={`section section--profile-timeline ${
-                    isLandscape ? 'timeline-layout--desktop' : 'timeline-layout--mobile'
-                }`}
+                className={`section section--profile-timeline ${isLandscape ? 'timeline-layout--desktop' : 'timeline-layout--mobile'}`}
                 ref={wrapperRef}
             >
                 <AnimatedHeading className="heading--profile-timeline js_move-heading is-animated-top">
-                    現在までのあゆみ
+                    {t('timeline.見出し')}
                 </AnimatedHeading>
                 <ol
                     className="timelines"
@@ -158,36 +186,24 @@ export function ProfileTimeline() {
                     style={{ transform: `translateX(${offset}px)` }}
                     onTransitionEnd={(event) => {
                         // CSSアニメーション完了後に、表示位置とボタン状態を同期する。
-                        if (
-                            event.target === event.currentTarget &&
-                            event.propertyName === 'transform'
-                        ) {
+                        if (event.target === event.currentTarget && event.propertyName === 'transform') {
                             updateButtonState();
                         }
                     }}
                 >
-                    {timeline.map(({ year, content }, index) => (
-                        <li
-                            className={`timeline${index === 0 ? ' timeline--first' : ''}`}
-                            key={year}
-                        >
-                            <div className="timeline__card">
-                                <time className="timeline__time">{year}</time>
-                                {content.map((segment, index) => (
-                                    <span className="timeline__content" key={`${year}-${index}`}>
-                                        {segment.lineBreak && <br />}
-                                        {segment.emphasis ? (
-                                            <span className="timeline__subcolor">
-                                                {segment.text}
-                                            </span>
-                                        ) : (
-                                            segment.text
-                                        )}
+                    {timeline.map(({ year }, index) => {
+                        const entry = t<Record<string, string>>(`timeline.年別.${year.replace('~', '')}` as TranslationKey);
+                        return (
+                            <li className={`timeline${index === 0 ? ' timeline--first' : ''}`} key={year}>
+                                <div className="timeline__card">
+                                    <time className="timeline__time">{year === '2017' ? `${year}~` : year}</time>
+                                    <span className="timeline__content">
+                                        <RichText text={entry['本文']} emphasisClassName="timeline__subcolor" />
                                     </span>
-                                ))}
-                            </div>
-                        </li>
-                    ))}
+                                </div>
+                            </li>
+                        );
+                    })}
                     <li className="timeline timeline--last" aria-hidden="true"></li>
                 </ol>
                 <div className="timeline-arrows">
@@ -196,7 +212,7 @@ export function ProfileTimeline() {
                         type="button"
                         disabled={!canMovePrev}
                         onClick={() => moveTimeline('prev')}
-                        aria-label="前の経歴を表示"
+                        aria-label={t('timeline.ナビゲーション.前へ')}
                     >
                         <span className="icon-arrow icon-arrow--prev" aria-hidden="true" />
                     </button>
@@ -205,7 +221,7 @@ export function ProfileTimeline() {
                         type="button"
                         disabled={!canMoveNext}
                         onClick={() => moveTimeline('next')}
-                        aria-label="次の経歴を表示"
+                        aria-label={t('timeline.ナビゲーション.次へ')}
                     >
                         <span className="icon-arrow icon-arrow--next" aria-hidden="true" />
                     </button>
@@ -213,4 +229,4 @@ export function ProfileTimeline() {
             </section>
         </div>
     );
-}
+};

@@ -1,5 +1,68 @@
 @use 'variables' as *;
 
+/* 画面右上の言語切り替えコントロール。 */
+.language-switcher {
+    position: fixed;
+    z-index: 10;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    padding: 2px;
+    border: 1px solid rgba($color-profile, 0.18);
+    border-radius: 999px;
+    background: $color-white;
+    box-shadow: 0 2px 8px rgba($color-black, 0.08);
+
+    &--works {
+        border-color: rgba($color-work, 0.18);
+
+        .language-switcher__option {
+            &:hover,
+            &:focus-visible {
+                background: rgba($color-work, 0.12);
+            }
+
+            &.is-active,
+            &.is-active:hover,
+            &.is-active:focus-visible {
+                background: $color-work;
+            }
+        }
+    }
+}
+
+.language-switcher__option {
+    min-width: 28px;
+    padding: 4px 7px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: $color-black;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    transition:
+        background-color 0.2s,
+        color 0.2s;
+
+    &:hover,
+    &:focus-visible {
+        background: rgba($color-profile, 0.12);
+    }
+
+    &.is-active {
+        background: $color-profile;
+        color: $color-white;
+    }
+
+    &.is-active:hover,
+    &.is-active:focus-visible {
+        background: $color-profile;
+    }
+}
+
+/* 画面内に固定表示するページトップへの戻るボタン。 */
 .nav-toTop {
     position: fixed;
     right: 8px;
@@ -12,6 +75,7 @@
     }
 }
 
+/* Font Awesomeアイコンの共通表示と、使用するアイコン指定。 */
 .nav-toTop__btn {
     .fa-lg {
         font-size: 4.8rem;

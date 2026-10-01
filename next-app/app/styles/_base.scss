@@ -1,5 +1,6 @@
 @use 'variables' as *;
 
+/* 全要素の初期化と、サイト全体で共有する基本要素の定義。 */
 *,
 *:before,
 *:after {
@@ -43,7 +44,7 @@ h4 {
     line-height: 2.8rem;
 }
 
-/* all */
+/* レイアウトの基本コンテナと共通セクション。 */
 .wrapper + .wrapper {
     padding-top: 32px;
 }
@@ -86,6 +87,7 @@ h4 {
     line-height: 3rem;
 }
 
+/* タイムラインなどで使うSVGアイコンの共通表示設定。 */
 /**
  * SVGアイコンをmask-imageで表示するための共通クラス。
  * 塗り色はbackground-color: currentColorで決まるため、
@@ -124,7 +126,7 @@ h4 {
     }
 }
 
-/* animated */
+/* スクロール表示やホバー時に使う共通アニメーション。 */
 .is-animated-top {
     opacity: 0;
     transform: translateY(4.8rem);

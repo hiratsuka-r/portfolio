@@ -1,10 +1,13 @@
 'use client';
 
+import { useTranslation } from '@/components/LocaleProvider';
 import { smoothScrollTo } from '@/utils/scroll';
 import Image from 'next/image';
 import type { MouseEvent } from 'react';
 
 export const Footer = () => {
+    const { t, locale } = useTranslation();
+
     const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>) => {
         const targetId = event.currentTarget.hash.slice(1);
         const target = document.getElementById(targetId);
@@ -24,61 +27,62 @@ export const Footer = () => {
                         <a
                             href="#top"
                             className="footer__logo"
-                            aria-label="hiratsuka-r ページトップ"
+                            aria-label={`hiratsuka-r ${t('site.ページトップ')}`}
                             onClick={handleAnchorClick}
                         >
                             <Image
-                                src="/portfolio/img/logo_green.png"
-                                alt="かえるラボ | Web開発・UI/UXデザイン"
-                                width={2172}
-                                height={724}
+                                src={locale === 'en' ? '/portfolio/img/logo_green_en.png' : '/portfolio/img/logo_green.png'}
+                                alt={t('site.サイト名')}
+                                width={750}
+                                height={125}
                                 priority
                             />
                         </a>
                     </div>
 
                     <div className="footer__message">
-                        <p className="footer__catch">考える。つくる。かえる。</p>
+                        <p className="footer__catch">{t('site.キャッチコピー.0')}</p>
                         <p className="footer__description">
-                            課題を整理し、使う人の目線で考え、
-                            <br />
-                            必要なところまで自分でつくって、
-                            <br />
-                            よりいい形にかえていく。
+                            {t<string[]>('site.キャッチコピー')
+                                .slice(1)
+                                .map((line) => (
+                                    <span key={line}>
+                                        {line}
+                                        <br />
+                                    </span>
+                                ))}
                         </p>
                     </div>
                 </div>
 
-                <nav className="footer__nav" aria-label="フッターナビゲーション">
+                <nav className="footer__nav" aria-label={t('footer.ナビゲーションラベル')}>
                     <a href="#profile" onClick={handleAnchorClick}>
-                        プロフィール
+                        {t<string[]>('footer.ナビゲーション')[0]}
                     </a>
                     <span aria-hidden="true">/</span>
                     <a href="#capabilities" onClick={handleAnchorClick}>
-                        できること
+                        {t<string[]>('footer.ナビゲーション')[1]}
                     </a>
                     <span aria-hidden="true">/</span>
                     <a href="#works" onClick={handleAnchorClick}>
-                        制作実績
+                        {t<string[]>('footer.ナビゲーション')[2]}
                     </a>
                     <span aria-hidden="true">/</span>
                     <a href="#skills" onClick={handleAnchorClick}>
-                        スキル
+                        {t<string[]>('footer.ナビゲーション')[3]}
                     </a>
                     <span aria-hidden="true">/</span>
                     <a href="#timeline" onClick={handleAnchorClick}>
-                        あゆみ
+                        {t<string[]>('footer.ナビゲーション')[4]}
                     </a>
                 </nav>
 
                 <div className="footer__bottom">
                     <div className="footer__legal">
                         <p className="footer__copyright">
-                            © 2017–{new Date().getFullYear()} かえるラボ
+                            © 2017–{new Date().getFullYear()} {t('site.著作権者')}
                         </p>
-                        <p className="footer__invoice-number">
-                            適格請求書発行事業者登録番号：T2810973054129
-                        </p>
+                        <p className="footer__invoice-number">{t('site.適格請求書発行事業者登録番号')}</p>
                     </div>
                 </div>
             </div>

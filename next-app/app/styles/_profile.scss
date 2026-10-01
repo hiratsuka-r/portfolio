@@ -1,5 +1,6 @@
 @use 'variables' as *;
 
+/* プロフィール関連セクションの背景と外側の余白。 */
 .article--profile {
     background: $color-profile;
 }
@@ -16,6 +17,7 @@
     padding-bottom: 72px;
 }
 
+/* 白いカード型セクションで共通利用する本文の基本スタイル。 */
 .section--approach,
 .section--profile-note {
     color: $color-black;
@@ -31,6 +33,7 @@
     margin: 0;
 }
 
+/* 取り組み内容と相談例を区切る補助線。 */
 .approach__consultation {
     border-top: 1px solid #dbe5ec;
     margin-top: 28px;
@@ -52,6 +55,8 @@
 .capabilities__description {
     margin-bottom: 24px;
 }
+
+/* 対応可能時間を説明文から分離して表示する補足領域。 */
 
 .capabilities__list {
     border-top: 1px solid #dbe5ec;
@@ -78,6 +83,7 @@
     gap: 8px;
 }
 
+/* 詳細なスキル一覧は折りたたみ領域として表示する。 */
 .profile-skill__details {
     margin-top: 24px;
 }
@@ -104,6 +110,7 @@
     padding: 32px;
 }
 
+/* 各プロフィールカード内の見出し間隔を統一する。 */
 .heading--profile-name,
 .heading--profile-note,
 .heading--profile-timeline {
@@ -172,6 +179,7 @@
 
 /* プロフィール > タイムライン */
 
+/* タイムラインはデスクトップでは横スクロール、モバイルでは縦並びにする。 */
 .section--profile-timeline {
     overflow-x: hidden;
     white-space: nowrap;
@@ -189,6 +197,7 @@
     transition: all 1s;
 }
 
+/* 年ごとのカードを接続する水平ラインと終端マーカー。 */
 .timeline {
     background: #ccc;
     color: $color-black;
@@ -235,7 +244,7 @@
 
     &--last {
         margin-right: 0;
-        width: 380px;
+        width: 400px;
 
         &:after {
             background: #ccc;
@@ -245,11 +254,12 @@
             left: 0;
             top: 0;
             transform: translateY(0);
-            width: 400px;
+            width: 440px;
         }
     }
 }
 
+/* デスクトップではカードをラインの上下へ交互に配置する。 */
 .timeline-layout--desktop {
     .timeline:nth-child(odd) {
         &::before {
@@ -290,6 +300,7 @@
     font-weight: 600;
 }
 
+/* カードの高さはコンテンツ計測後にReact側で統一し、本文の切れを防ぐ。 */
 .timeline__card {
     opacity: 1;
     border: 3px solid #ccc;
@@ -299,7 +310,7 @@
     padding: 8px 16px 16px;
     position: absolute;
     white-space: normal;
-    width: 380px;
+    width: 400px;
     animation: opacity 1s linear 1;
     overflow: hidden;
 
@@ -350,6 +361,7 @@
     margin-right: 20px;
 }
 
+/* モバイルでは横スクロール用の装飾と固定配置を解除する。 */
 .timeline-layout--mobile {
     .timelines {
         margin-left: 0;
@@ -408,6 +420,7 @@
 }
 
 /* プロフィール > 業務 */
+/* 対応可能な業務を箇条書きで表示する。 */
 .profile-menu {
     list-style: square;
     margin: 0 0 0 2rem;

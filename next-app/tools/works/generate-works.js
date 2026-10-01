@@ -19,15 +19,15 @@ XLSX.set_fs(fs);
  * data/works.jsonは生成しない。
  */
 const projectRoot = path.resolve(import.meta.dirname, '..', '..');
-const inputPath = path.resolve(
-    process.argv[2] || path.join(projectRoot, 'data', 'works_master.xlsx')
-);
+const inputPath = path.resolve(process.argv[2] || path.join(projectRoot, 'data', 'works_master.xlsx'));
 const outputPath = path.resolve(process.argv[3] || path.join(projectRoot, 'data', 'works.ts'));
+const localePath = path.resolve(path.join(projectRoot, 'data', 'locales', 'ja.ts'));
+const englishLocalePath = path.resolve(path.join(projectRoot, 'data', 'locales', 'en.ts'));
 
 const generatedTypes = `export type Project = string | { name: string; company?: string };
 export type Technologies = Record<string, string[]>;
 
-export interface BasicInfo {
+export type BasicInfo = {
     serviceType?: string;
     industry?: string;
     format?: string;
@@ -36,16 +36,23 @@ export interface BasicInfo {
     role?: string;
     teamSize?: string;
     [key: string]: string | undefined;
-}
+};
 
-export interface Work {
+export type WorkSource = {
     id: string;
+    image: string;
+    link?: string;
+    links?: {
+        ja?: string;
+        en?: string;
+    };
+};
+
+export type Work = WorkSource & {
     title: string;
     subtitle?: string;
     category: string[];
     responsibilityTags: string[];
-    image: string;
-    link?: string;
     project?: Project | null;
     description?: string;
     overview?: string;
@@ -54,7 +61,7 @@ export interface Work {
     technologies?: Technologies;
     achievements?: string[];
     note?: string;
-}`;
+};`;
 
 const basicInfoKeys = {
     種類: 'serviceType',
@@ -65,23 +72,16 @@ const basicInfoKeys = {
     体制: 'teamSize',
 };
 
-const sectionHeadings = [
-    '管理情報',
-    '基本情報',
-    '表示情報',
-    '概要',
-    '担当内容',
-    '実績・工夫',
-    '技術',
-];
+const sectionHeadings = ['管理情報', '基本情報', '表示情報', '概要', '担当内容', '実績・工夫', '技術'];
 const requiredHeadings = sectionHeadings.slice(0, -1);
-const requiredManagementFields = ['ID', '画像', 'リンク', 'プロジェクト'];
+const requiredManagementFields = ['ID', '画像', 'プロジェクト'];
 
 // ---------------------------------------------------------------------------
 // Excelセル・行の読み取り
 // ---------------------------------------------------------------------------
 
 const normalize = (value) => String(value ?? '').trim();
+const normalizeWorkId = (value) => `data-${normalize(value).replace(/^data-/, '')}`;
 
 /**
  * Excelのセルを、改行・カンマ・読点・スラッシュ区切りの配列へ変換する。
@@ -183,8 +183,7 @@ const readTechnologies = (rows, sheetName) => {
 /**
  * シート内の各セクションの開始行をまとめて返す。
  */
-const getSectionIndexes = (rows) =>
-    Object.fromEntries(sectionHeadings.map((heading) => [heading, findHeading(rows, heading)]));
+const getSectionIndexes = (rows) => Object.fromEntries(sectionHeadings.map((heading) => [heading, findHeading(rows, heading)]));
 
 /**
  * 指定セクションの見出し直後から、次の見出し直前までの行を返す。
@@ -231,6 +230,9 @@ const parseManagementInfo = (rows, indexes, sheetName) => {
             throw new Error(`Management field "${field}" is empty in sheet "${sheetName}"`);
         }
     }
+    if (!management.リンク && !management['リンク(JA)'] && !management['リンク(EN)']) {
+        throw new Error(`Management field "リンク or リンク(JA)/リンク(EN)" is empty in sheet "${sheetName}"`);
+    }
     return management;
 };
 
@@ -239,8 +241,17 @@ const parseTextList = (rows, indexes, heading) =>
         .map((row) => cleanBullet(getContent(row)))
         .filter(Boolean);
 
-const parseDescription = (rows, indexes) =>
-    getSectionRows(rows, indexes, '概要').map(getContent).filter(Boolean).join('\n');
+const parseDescription = (rows, indexes) => getSectionRows(rows, indexes, '概要').map(getContent).filter(Boolean).join('\n');
+
+const parseLocalizedLinks = (management) => {
+    const ja = management['リンク(JA)'];
+    const en = management['リンク(EN)'];
+    if (!ja && !en) return undefined;
+    return {
+        ...(ja ? { ja } : {}),
+        ...(en ? { en } : {}),
+    };
+};
 
 /**
  * 番号付きシートを1件のWorkオブジェクトへ変換する。
@@ -261,17 +272,17 @@ const parseWorkSheet = (sheetName, sheet) => {
 
     const { category, responsibilityTags } = parseDisplayInfo(rows, indexes, sheetName);
     const management = parseManagementInfo(rows, indexes, sheetName);
-    const technologies =
-        indexes.技術 >= 0 ? readTechnologies(getSectionRows(rows, indexes, '技術'), sheetName) : {};
+    const technologies = indexes.技術 >= 0 ? readTechnologies(getSectionRows(rows, indexes, '技術'), sheetName) : {};
 
     return {
-        id: management.ID,
+        id: normalizeWorkId(management.ID),
         title,
         subtitle,
         category,
         responsibilityTags,
         image: management.画像,
-        link: management.リンク,
+        link: management.リンク || management['リンク(JA)'] || management['リンク(EN)'],
+        links: parseLocalizedLinks(management),
         project: {
             name: management.プロジェクト,
             ...(management.会社 ? { company: management.会社 } : {}),
@@ -292,8 +303,7 @@ const parseWorkSheet = (sheetName, sheet) => {
 /**
  * READMEなどを除き、番号付きのWorksシートだけを返す。
  */
-const getWorkSheetNames = (workbook) =>
-    workbook.SheetNames.filter((name) => name.toLowerCase() !== 'readme');
+const getWorkSheetNames = (workbook) => workbook.SheetNames.filter((name) => name.toLowerCase() !== 'readme');
 
 const validateSheetStructure = (sheetName, rows, referenceLayout) => {
     const { title, subtitle } = getTitleRows(rows);
@@ -305,10 +315,7 @@ const validateSheetStructure = (sheetName, rows, referenceLayout) => {
 
     const layout = getLayoutSignature(rows);
     if (layout.headings.join('|') !== referenceLayout.headings.join('|')) {
-        throw new Error(
-            `[${sheetName}] section order does not match the reference. ` +
-                `Expected: ${sectionHeadings.join(' > ')}`
-        );
+        throw new Error(`[${sheetName}] section order does not match the reference. ` + `Expected: ${sectionHeadings.join(' > ')}`);
     }
 
     if (indexes.技術 < 0) {
@@ -320,9 +327,21 @@ const validateSheetStructure = (sheetName, rows, referenceLayout) => {
 const validateUniqueTitles = (titles) => {
     const duplicateTitles = titles.filter((title, index) => titles.indexOf(title) !== index);
     if (duplicateTitles.length > 0) {
-        throw new Error(
-            `Works sheet titles must be unique: ${[...new Set(duplicateTitles)].join(', ')}`
-        );
+        throw new Error(`Works sheet titles must be unique: ${[...new Set(duplicateTitles)].join(', ')}`);
+    }
+};
+
+const validateUniqueWorkIds = (works) => {
+    const counts = new Map();
+    for (const work of works) {
+        counts.set(work.id, (counts.get(work.id) || 0) + 1);
+    }
+
+    const duplicateIds = [...counts.entries()]
+        .filter(([, count]) => count > 1)
+        .map(([id]) => id);
+    if (duplicateIds.length > 0) {
+        throw new Error(`Normalized Work IDs must be unique: ${duplicateIds.join(', ')}`);
     }
 };
 
@@ -339,9 +358,7 @@ const validateWorkbook = (workbook, workSheets) => {
     const referenceLayout = getLayoutSignature(referenceRows);
     const titles = [];
     for (const sheetName of workSheets) {
-        titles.push(
-            validateSheetStructure(sheetName, readRows(workbook.Sheets[sheetName]), referenceLayout)
-        );
+        titles.push(validateSheetStructure(sheetName, readRows(workbook.Sheets[sheetName]), referenceLayout));
     }
     validateUniqueTitles(titles);
 
@@ -361,17 +378,95 @@ const readWorkbook = () => {
 };
 
 const parseWorks = (workbook, cardSheets) =>
-    cardSheets
-        .map((sheetName) => parseWorkSheet(sheetName, workbook.Sheets[sheetName]))
-        .map((work) => work);
+    cardSheets.map((sheetName) => parseWorkSheet(sheetName, workbook.Sheets[sheetName])).map((work) => work);
 
 const writeWorksFile = (works) => {
-    const source = `${generatedTypes}\n\nexport const works: Work[] = ${JSON.stringify(
-        works,
-        null,
-        4
-    )};\n`;
+    const sourceWorks = works.map(({ id, image, link, links }) => ({ id, image, link, links }));
+    const source = `${generatedTypes}\n\nexport const works: WorkSource[] = ${JSON.stringify(sourceWorks, null, 4)};\n`;
     fs.writeFileSync(outputPath, `\uFEFF${source}`, { encoding: 'utf8' });
+};
+
+const readLocale = (filePath) => {
+    if (!fs.existsSync(filePath)) return {};
+    const source = fs.readFileSync(filePath, 'utf8');
+    const moduleSource = source
+        .replace(/^\uFEFF?export const messages = /, 'const messages = ')
+        .replace(/\s+as const;\s*export default messages;\s*$/, '');
+    return Function(`${moduleSource}; return messages;`)();
+};
+
+const validateEnglishTranslations = (works) => {
+    const locale = readLocale(englishLocalePath);
+    const englishWorks = locale.works || {};
+    const missingIds = works.filter((work) => englishWorks[work.id] === undefined).map((work) => work.id);
+
+    if (missingIds.length > 0) {
+        console.warn(`警告: 英語翻訳が未登録の制作実績があります: ${missingIds.join(', ')}`);
+    }
+};
+
+const writeLocale = (filePath, locale) => {
+    const source = `export const messages = ${JSON.stringify(locale, null, 4)} as const;\n\nexport default messages;\n`;
+    fs.writeFileSync(filePath, source, { encoding: 'utf8' });
+};
+
+const writeJapaneseLocale = (works) => {
+    const locale = readLocale(localePath);
+    const workLocale = locale.works || {};
+    const preservedWorkMessages = {
+        ...(workLocale.見出し !== undefined ? { 見出し: workLocale.見出し } : {}),
+        ...(workLocale.説明 !== undefined ? { 説明: workLocale.説明 } : {}),
+        ...(workLocale.共通 !== undefined ? { 共通: workLocale.共通 } : {}),
+        ...(workLocale.詳細を表示 !== undefined ? { 詳細を表示: workLocale.詳細を表示 } : {}),
+        ...(workLocale.公開ページを見る !== undefined ? { 公開ページを見る: workLocale.公開ページを見る } : {}),
+        ...(workLocale.制作区分 !== undefined ? { 制作区分: workLocale.制作区分 } : {}),
+        ...(workLocale.参画プロジェクト !== undefined ? { 参画プロジェクト: workLocale.参画プロジェクト } : {}),
+    };
+
+    locale.works = {
+        ...preservedWorkMessages,
+        ...Object.fromEntries(
+            works.map((work) => [
+                work.id,
+                {
+                    タイトル: work.title,
+                    サブタイトル: work.subtitle,
+                    カテゴリ: work.category,
+                    担当タグ: work.responsibilityTags,
+                    プロジェクト: work.project
+                        ? {
+                              案件名: typeof work.project === 'string' ? work.project : work.project.name,
+                              ...(typeof work.project === 'object' && work.project.company ? { 会社名: work.project.company } : {}),
+                          }
+                        : undefined,
+                    概要: work.description,
+                    基本情報: work.basicInfo
+                        ? Object.fromEntries(
+                              Object.entries(work.basicInfo).map(([key, value]) => [
+                                  {
+                                      serviceType: '種類',
+                                      industry: '分野',
+                                      format: '形式',
+                                      period: '期間',
+                                      role: '担当',
+                                      process: '担当工程',
+                                      teamSize: '体制',
+                                  }[key] || key,
+                                  value,
+                              ])
+                          )
+                        : undefined,
+                    担当内容: work.responsibilities,
+                    技術: work.technologies,
+                    実績: work.achievements,
+                    注記: work.note,
+                },
+            ])
+        ),
+    };
+
+    fs.mkdirSync(path.dirname(localePath), { recursive: true });
+    writeLocale(localePath, locale);
 };
 
 const generateWorks = () => {
@@ -384,9 +479,13 @@ const generateWorks = () => {
     console.log('Works generation started.');
     validateWorkbook(workbook, workSheets);
     const works = parseWorks(workbook, workSheets);
+    validateUniqueWorkIds(works);
+    validateEnglishTranslations(works);
     writeWorksFile(works);
+    writeJapaneseLocale(works);
     console.log(`✓ ${works.length} Works detected`);
     console.log(`✓ data/works.ts generated`);
+    console.log(`✓ data/locales/ja.ts works messages generated (overwritten if it existed)`);
     console.log('Works generation completed.');
 };
 
