@@ -84,15 +84,15 @@ export const useTranslation = () => {
 
 /** 日本語と英語を選択できるセグメント型の言語切り替えUI。 */
 export const LanguageSwitcher = () => {
-    const { locale, setLocale } = useTranslation();
+    const { locale, setLocale, t } = useTranslation();
 
     return (
-        <div className="language-switcher" role="group" aria-label="言語を選択">
+        <div className="language-switcher" role="group" aria-label={t('site.言語選択')}>
             <button
                 className={`language-switcher__option${locale === 'ja' ? ' is-active' : ''}`}
                 type="button"
                 onClick={() => setLocale('ja')}
-                aria-label="日本語に切り替える"
+                aria-label={t('site.日本語に切り替える')}
                 aria-pressed={locale === 'ja'}
             >
                 JA
@@ -101,7 +101,7 @@ export const LanguageSwitcher = () => {
                 className={`language-switcher__option${locale === 'en' ? ' is-active' : ''}`}
                 type="button"
                 onClick={() => setLocale('en')}
-                aria-label="英語に切り替える"
+                aria-label={t('site.英語に切り替える')}
                 aria-pressed={locale === 'en'}
             >
                 EN

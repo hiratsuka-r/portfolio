@@ -11,6 +11,9 @@ export const messages = {
         ページトップ: 'Back to Top',
         説明: "hiratsuka-r's portfolio",
         著作権者: 'Kaeru Lab',
+        言語選択: 'Select language',
+        日本語に切り替える: 'Switch to Japanese',
+        英語に切り替える: 'Switch to English',
     },
     navigation: {
         プロフィール: 'Profile',
