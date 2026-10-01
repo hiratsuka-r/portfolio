@@ -6,7 +6,7 @@ import Image from 'next/image';
 import type { MouseEvent } from 'react';
 
 export const Footer = () => {
-    const { t } = useTranslation();
+    const { t, locale } = useTranslation();
 
     const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>) => {
         const targetId = event.currentTarget.hash.slice(1);
@@ -30,7 +30,13 @@ export const Footer = () => {
                             aria-label={`hiratsuka-r ${t('site.ページトップ')}`}
                             onClick={handleAnchorClick}
                         >
-                            <Image src="/portfolio/img/logo_green.png" alt={t('site.サイト名')} width={2172} height={724} priority />
+                            <Image
+                                src={locale === 'en' ? '/portfolio/img/logo_green_en.png' : '/portfolio/img/logo_green.png'}
+                                alt={t('site.サイト名')}
+                                width={750}
+                                height={125}
+                                priority
+                            />
                         </a>
                     </div>
 

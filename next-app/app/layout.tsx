@@ -1,6 +1,7 @@
 import '@/app/style.scss';
 import { t } from '@/tools/dictionary/i18n';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
     title: t('site.サイト名'),
@@ -26,7 +27,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
                     href="https://fonts.googleapis.com/css2?family=Kaisei+Opti&family=Kiwi+Maru&family=Kosugi+Maru&display=swap"
                     rel="stylesheet"
                 />
-                <script src="https://kit.fontawesome.com/85d6855f03.js" crossOrigin="anonymous" />
+                <Script src="https://kit.fontawesome.com/85d6855f03.js" crossOrigin="anonymous" />
             </head>
             <body id="top">{children}</body>
         </html>

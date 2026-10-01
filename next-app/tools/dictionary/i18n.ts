@@ -216,9 +216,11 @@ const convertWorkTranslation = (message: WorkTranslation, workId: string): Local
  */
 export const localizedWork = (source: WorkSource, locale: Locale = defaultLocale): Work => {
     const message = getTranslation<WorkTranslation>(locale, `works.${source.id}` as TranslationKey);
+    const link = source.links?.[locale] ?? source.link;
 
     return {
         ...source,
+        link,
         ...convertWorkTranslation(message, source.id),
     };
 };

@@ -26,7 +26,7 @@ const localePath = path.resolve(path.join(projectRoot, 'data', 'locales', 'ja.ts
 const generatedTypes = `export type Project = string | { name: string; company?: string };
 export type Technologies = Record<string, string[]>;
 
-export interface BasicInfo {
+export type BasicInfo = {
     serviceType?: string;
     industry?: string;
     format?: string;
@@ -35,15 +35,19 @@ export interface BasicInfo {
     role?: string;
     teamSize?: string;
     [key: string]: string | undefined;
-}
+};
 
-export interface WorkSource {
+export type WorkSource = {
     id: string;
     image: string;
     link?: string;
-}
+    links?: {
+        ja?: string;
+        en?: string;
+    };
+};
 
-export interface Work extends WorkSource {
+export type Work = WorkSource & {
     title: string;
     subtitle?: string;
     category: string[];
@@ -56,7 +60,7 @@ export interface Work extends WorkSource {
     technologies?: Technologies;
     achievements?: string[];
     note?: string;
-}`;
+};`;
 
 const basicInfoKeys = {
     種類: 'serviceType',
@@ -69,7 +73,7 @@ const basicInfoKeys = {
 
 const sectionHeadings = ['管理情報', '基本情報', '表示情報', '概要', '担当内容', '実績・工夫', '技術'];
 const requiredHeadings = sectionHeadings.slice(0, -1);
-const requiredManagementFields = ['ID', '画像', 'リンク', 'プロジェクト'];
+const requiredManagementFields = ['ID', '画像', 'プロジェクト'];
 
 // ---------------------------------------------------------------------------
 // Excelセル・行の読み取り
@@ -225,6 +229,9 @@ const parseManagementInfo = (rows, indexes, sheetName) => {
             throw new Error(`Management field "${field}" is empty in sheet "${sheetName}"`);
         }
     }
+    if (!management.リンク && !management['リンク(JA)'] && !management['リンク(EN)']) {
+        throw new Error(`Management field "リンク or リンク(JA)/リンク(EN)" is empty in sheet "${sheetName}"`);
+    }
     return management;
 };
 
@@ -234,6 +241,16 @@ const parseTextList = (rows, indexes, heading) =>
         .filter(Boolean);
 
 const parseDescription = (rows, indexes) => getSectionRows(rows, indexes, '概要').map(getContent).filter(Boolean).join('\n');
+
+const parseLocalizedLinks = (management) => {
+    const ja = management['リンク(JA)'];
+    const en = management['リンク(EN)'];
+    if (!ja && !en) return undefined;
+    return {
+        ...(ja ? { ja } : {}),
+        ...(en ? { en } : {}),
+    };
+};
 
 /**
  * 番号付きシートを1件のWorkオブジェクトへ変換する。
@@ -263,7 +280,8 @@ const parseWorkSheet = (sheetName, sheet) => {
         category,
         responsibilityTags,
         image: management.画像,
-        link: management.リンク,
+        link: management.リンク || management['リンク(JA)'] || management['リンク(EN)'],
+        links: parseLocalizedLinks(management),
         project: {
             name: management.プロジェクト,
             ...(management.会社 ? { company: management.会社 } : {}),
@@ -348,7 +366,7 @@ const parseWorks = (workbook, cardSheets) =>
     cardSheets.map((sheetName) => parseWorkSheet(sheetName, workbook.Sheets[sheetName])).map((work) => work);
 
 const writeWorksFile = (works) => {
-    const sourceWorks = works.map(({ id, image, link }) => ({ id, image, link }));
+    const sourceWorks = works.map(({ id, image, link, links }) => ({ id, image, link, links }));
     const source = `${generatedTypes}\n\nexport const works: WorkSource[] = ${JSON.stringify(sourceWorks, null, 4)};\n`;
     fs.writeFileSync(outputPath, `\uFEFF${source}`, { encoding: 'utf8' });
 };
