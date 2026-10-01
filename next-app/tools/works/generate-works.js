@@ -22,6 +22,7 @@ const projectRoot = path.resolve(import.meta.dirname, '..', '..');
 const inputPath = path.resolve(process.argv[2] || path.join(projectRoot, 'data', 'works_master.xlsx'));
 const outputPath = path.resolve(process.argv[3] || path.join(projectRoot, 'data', 'works.ts'));
 const localePath = path.resolve(path.join(projectRoot, 'data', 'locales', 'ja.ts'));
+const englishLocalePath = path.resolve(path.join(projectRoot, 'data', 'locales', 'en.ts'));
 
 const generatedTypes = `export type Project = string | { name: string; company?: string };
 export type Technologies = Record<string, string[]>;
@@ -394,6 +395,16 @@ const readLocale = (filePath) => {
     return Function(`${moduleSource}; return messages;`)();
 };
 
+const validateEnglishTranslations = (works) => {
+    const locale = readLocale(englishLocalePath);
+    const englishWorks = locale.works || {};
+    const missingIds = works.filter((work) => englishWorks[work.id] === undefined).map((work) => work.id);
+
+    if (missingIds.length > 0) {
+        console.warn(`警告: 英語翻訳が未登録の制作実績があります: ${missingIds.join(', ')}`);
+    }
+};
+
 const writeLocale = (filePath, locale) => {
     const source = `export const messages = ${JSON.stringify(locale, null, 4)} as const;\n\nexport default messages;\n`;
     fs.writeFileSync(filePath, source, { encoding: 'utf8' });
@@ -469,6 +480,7 @@ const generateWorks = () => {
     validateWorkbook(workbook, workSheets);
     const works = parseWorks(workbook, workSheets);
     validateUniqueWorkIds(works);
+    validateEnglishTranslations(works);
     writeWorksFile(works);
     writeJapaneseLocale(works);
     console.log(`✓ ${works.length} Works detected`);
