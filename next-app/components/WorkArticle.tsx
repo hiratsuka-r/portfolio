@@ -22,7 +22,11 @@ export const WorkArticle = () => {
                         {t<string[]>('works.説明').map((line, index) => (
                             <span key={line}>
                                 {line}
-                                {index === 0 && <br className="media-br__tablet" />}
+                                {index === 0 && (
+                                    <>
+                                        <br className="media-br__tablet" />{' '}
+                                    </>
+                                )}
                             </span>
                         ))}
                     </p>
