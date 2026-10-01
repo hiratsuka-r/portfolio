@@ -1,5 +1,6 @@
 @use 'variables' as *;
 
+/* 制作実績セクションの背景とカード一覧のレイアウト。 */
 .article--work {
     background: $color-work;
     padding-bottom: 72px;
@@ -16,6 +17,7 @@
     justify-content: flex-start;
 }
 
+/* 制作実績カード本体と、カード内の概要情報。 */
 .work {
     align-items: stretch;
     background-color: $color-white;
@@ -43,6 +45,7 @@
     text-align: center;
 }
 
+/* カード画像の比率とホバー時のグレースケール演出。 */
 .work-image {
     aspect-ratio: 16 / 9;
     display: block;
@@ -107,6 +110,7 @@
     }
 }
 
+/* カードのタイトル、概要、案件情報、詳細表示導線。 */
 .work-name {
     display: block;
     font-weight: bold;
@@ -177,6 +181,7 @@
     transform: translateX(3px);
 }
 
+/* カテゴリや担当内容を示すラベル。 */
 .work__label {
     display: flex;
     flex-wrap: wrap;
@@ -203,6 +208,7 @@ body.is-modal-open {
     overflow: hidden;
 }
 
+/* 制作実績の詳細モーダル全体と背景オーバーレイ。 */
 .work-modal {
     align-items: center;
     display: flex;
