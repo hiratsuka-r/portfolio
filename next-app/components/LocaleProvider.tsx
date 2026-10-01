@@ -12,6 +12,14 @@ const setLocaleClass = (locale: Locale) => {
     document.documentElement.classList.add(`locale-${locale}`);
 };
 
+const setDocumentMetadata = (locale: Locale) => {
+    document.title = getTranslation(locale, 'site.サイト名');
+
+    const description = getTranslation(locale, 'site.説明');
+    const descriptionElement = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    descriptionElement?.setAttribute('content', description);
+};
+
 // 子コンポーネントへ渡す言語状態と翻訳関数の型。
 type LocaleContextValue = {
     locale: Locale;
@@ -38,6 +46,7 @@ export const LocaleProvider = ({ children }: { children: React.ReactNode }) => {
         const currentLocale = savedLocale === 'en' ? 'en' : 'ja';
         document.documentElement.lang = currentLocale;
         setLocaleClass(currentLocale);
+        setDocumentMetadata(currentLocale);
     }, []);
 
     // 言語が変わったときだけContextの値を作り直し、利用コンポーネントを再描画する。
@@ -49,6 +58,7 @@ export const LocaleProvider = ({ children }: { children: React.ReactNode }) => {
                 window.localStorage.setItem(LOCALE_STORAGE_KEY, nextLocale);
                 document.documentElement.lang = nextLocale;
                 setLocaleClass(nextLocale);
+                setDocumentMetadata(nextLocale);
                 setLocale(nextLocale);
             },
             // 現在の言語を指定して辞書から文言を取得する。
