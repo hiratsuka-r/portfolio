@@ -6,6 +6,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 // ブラウザに保存する言語設定のキー。
 const LOCALE_STORAGE_KEY = 'portfolio-locale';
 const LOCALE_CLASS_NAMES = ['locale-ja', 'locale-en'] as const;
+const LANGUAGE_SWITCHER_TRIGGER_OFFSET = 12;
 
 const setLocaleClass = (locale: Locale) => {
     document.documentElement.classList.remove(...LOCALE_CLASS_NAMES);
@@ -85,9 +86,35 @@ export const useTranslation = () => {
 /** 日本語と英語を選択できるセグメント型の言語切り替えUI。 */
 export const LanguageSwitcher = () => {
     const { locale, setLocale, t } = useTranslation();
+    const [sectionTheme, setSectionTheme] = useState<'profile' | 'works'>('profile');
+
+    useEffect(() => {
+        const updateSectionTheme = () => {
+            const works = document.getElementById('works');
+            const skills = document.getElementById('skills');
+            const marker = window.scrollY + LANGUAGE_SWITCHER_TRIGGER_OFFSET;
+            const getTop = (element: HTMLElement | null) => (element ? element.getBoundingClientRect().top + window.scrollY : undefined);
+            const worksTop = getTop(works);
+            const skillsTop = getTop(skills);
+
+            setSectionTheme(
+                worksTop !== undefined && marker >= worksTop && (skillsTop === undefined || marker < skillsTop)
+                    ? 'works'
+                    : 'profile'
+            );
+        };
+
+        updateSectionTheme();
+        window.addEventListener('scroll', updateSectionTheme, { passive: true });
+        window.addEventListener('resize', updateSectionTheme);
+        return () => {
+            window.removeEventListener('scroll', updateSectionTheme);
+            window.removeEventListener('resize', updateSectionTheme);
+        };
+    }, []);
 
     return (
-        <div className="language-switcher" role="group" aria-label={t('site.言語選択')}>
+        <div className={`language-switcher language-switcher--${sectionTheme}`} role="group" aria-label={t('site.言語選択')}>
             <button
                 className={`language-switcher__option${locale === 'ja' ? ' is-active' : ''}`}
                 type="button"
