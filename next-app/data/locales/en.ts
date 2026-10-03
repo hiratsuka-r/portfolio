@@ -446,7 +446,7 @@ export const messages = {
                 本文: 'Entered a college of technology, majoring in Materials Engineering.\nWhile studying chemistry and engineering, I became immersed in watching films at the movie theater where I worked part-time.',
             },
             '2008': {
-                本文: 'Created a corporate website for my part-time employer.\nThis led to involvement in website operations and maintenance for several companies. By listening to what clients wanted, I discovered how rewarding it can be to create pages that people appreciate.',
+                本文: 'Created a corporate website for my part-time employer.\nThis led to involvement in website operations and maintenance for several companies. By listening to what clients wanted, I discovered how rewarding it can be to <em>create pages that people appreciate</em>.',
             },
             '2010': {
                 本文: 'Changed my career path and entered a <em>vocational school specializing in web production</em>.\nI immersed myself in creating projects while learning the fundamentals of design and web production.\nWas recognized as the top student at graduation.',
